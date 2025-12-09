@@ -4,16 +4,20 @@ import be.entreprise.entreprise1.model.Category;
 import be.entreprise.entreprise1.model.Product;
 import be.entreprise.entreprise1.repository.CategoryRepository;
 import be.entreprise.entreprise1.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class DataLoader implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    public DataLoader(CategoryRepository categoryRepository,
+                      ProductRepository productRepository) {
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+    }
+
 
     @Override
     public void run(String... args) {
