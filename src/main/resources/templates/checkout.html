@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h1>Checkout</h1>
+
+<div th:each="item : ${items}">
+    <p>
+        <strong th:text="${item.product.name}"></strong>
+        (Aantal: <span th:text="${item.quantity}"></span>)
+    </p>
+</div>
+
+<form method="post" action="/checkout/confirm">
+    <button type="submit">Bevestig bestelling</button>
+</form>
+
+</body>
+</html>

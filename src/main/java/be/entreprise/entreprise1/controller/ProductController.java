@@ -4,28 +4,43 @@ import be.entreprise.entreprise1.model.Category;
 import be.entreprise.entreprise1.model.Product;
 import be.entreprise.entreprise1.repository.CategoryRepository;
 import be.entreprise.entreprise1.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/categories")
+@Controller
 public class ProductController {
 
-    private final CategoryRepository categoryRepository;
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductController(CategoryRepository categoryRepository,
-                             ProductRepository productRepository) {
-        this.categoryRepository = categoryRepository;
+    // ✅ EXPLICIETE CONSTRUCTOR (BELANGRIJK)
+    public ProductController(ProductRepository productRepository,
+                             CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/{id}/products")
-    public List<Product> getProductsByCategory(@PathVariable Long id) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-        return productRepository.findByCategory(category);
+    @GetMapping("/products")
+    public String showProducts(
+            @RequestParam(required = false) Long category,
+            Model model
+    ) {
+        List<Product> products;
+
+        if (category != null) {
+            Category cat = categoryRepository.findById(category).orElse(null);
+            products = productRepository.findByCategory(cat);
+        } else {
+            products = productRepository.findAll();
+        }
+
+        model.addAttribute("products", products);
+        model.addAttribute("categories", categoryRepository.findAll());
+
+        return "products";
     }
 }

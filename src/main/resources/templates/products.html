@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catalogus</title>
+</head>
+<body>
+
+<h1>Catalogus</h1>
+
+<!-- CATEGORIE FILTER -->
+<div>
+    <strong>Filter op categorie:</strong>
+    <ul>
+        <li>
+            <a href="/products">Alle producten</a>
+        </li>
+        <li th:each="c : ${categories}">
+            <a th:href="@{/products(category=${c.id})}"
+               th:text="${c.name}"></a>
+        </li>
+    </ul>
+</div>
+
+<hr/>
+
+<!-- PRODUCTEN -->
+<div th:if="${#lists.isEmpty(products)}">
+    <p>Geen producten gevonden.</p>
+</div>
+
+<div th:each="p : ${products}">
+    <h3 th:text="${p.name}"></h3>
+
+    <p th:text="${p.description}"></p>
+
+    <p>
+        <strong>Categorie:</strong>
+        <span th:text="${p.category.name}"></span>
+    </p>
+
+    <p>
+        <strong>Stock:</strong>
+        <span th:text="${p.stock}"></span>
+    </p>
+
+    <!-- TOEVOEGEN AAN WINKELMAND -->
+    <form method="post" action="/cart/add">
+        <input type="hidden" name="productId" th:value="${p.id}" />
+        <input type="number" name="quantity" value="1" min="1" />
+        <button type="submit">Toevoegen aan winkelmand</button>
+    </form>
+
+    <hr/>
+</div>
+
+<!-- NAVIGATIE -->
+<a href="/cart">Ga naar winkelmand</a>
+
+</body>
+</html>
