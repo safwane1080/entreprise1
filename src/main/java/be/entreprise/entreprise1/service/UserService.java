@@ -13,6 +13,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User getDefaultUser() {
+
+        return userRepository.findByEmail("demo@ehb.be")
+                .orElseGet(() -> {
+                    User user = new User();
+                    user.setEmail("demo@ehb.be");
+                    user.setPassword("demo");   // ⬅ gebruik bestaand veld
+                    user.setRole("USER");
+                    return userRepository.save(user);
+                });
+    }
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }

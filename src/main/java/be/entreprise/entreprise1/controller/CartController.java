@@ -32,16 +32,28 @@ public class CartController {
         this.userService = userService;
     }
 
+    /**
+     * Helper: bepaalt automatisch juiste user
+     */
+    private User resolveUser(Authentication auth) {
+        if (auth != null && auth.isAuthenticated()) {
+            User user = userService.findByEmail(auth.getName());
+            if (user != null) {
+                return user;
+            }
+        }
+        return userService.getDefaultUser();
+    }
+
     @GetMapping("/cart")
     public String showCart(Authentication auth, Model model) {
 
-        User user = userService.findByEmail(auth.getName());
+        User user = resolveUser(auth);
         List<CartItem> items = cartService.getCart(user);
 
         model.addAttribute("items", items);
         return "cart";
     }
-
 
     @PostMapping("/cart/add")
     public String addToCart(
@@ -49,7 +61,7 @@ public class CartController {
             @RequestParam Long productId,
             @RequestParam(defaultValue = "1") int quantity
     ) {
-        User user = userService.findByEmail(auth.getName());
+        User user = resolveUser(auth);
         Product product = productRepository.findById(productId).orElseThrow();
 
         cartService.addToCart(user, product, quantity);
@@ -60,7 +72,7 @@ public class CartController {
     @PostMapping("/cart/clear")
     public String clearCart(Authentication auth) {
 
-        User user = userService.findByEmail(auth.getName());
+        User user = resolveUser(auth);
         cartService.clearCart(user);
 
         return "redirect:/cart";

@@ -23,39 +23,20 @@ public class Order {
 
     private String status;
 
-    public Long getId() {
-        return id;
+    public Order() {
+        this.createdAt = LocalDateTime.now();
+        this.status = "CREATED";
     }
 
-    public User getUser() {
-        return user;
-    }
+    // getters
+    public Long getId() { return id; }
+    public User getUser() { return user; }
+    public List<CartItem> getItems() { return items; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public String getStatus() { return status; }
 
-    public List<CartItem> getItems() {
-        return items;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setItems(List<CartItem> items) {
-        this.items = items;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    // setters
+    public void setUser(User user) { this.user = user; }
+    public void setItems(List<CartItem> items) { this.items = items; }
+    public void setStatus(String status) { this.status = status; }
 }

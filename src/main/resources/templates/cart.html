@@ -5,22 +5,42 @@
 </head>
 <body>
 
-<h2>Jouw winkelmand</h2>
+<h1>Jouw winkelmand</h1>
 
 <div th:if="${#lists.isEmpty(items)}">
     <p>Je winkelmand is leeg.</p>
+    <a href="/products">Verder winkelen</a>
 </div>
 
-<div th:each="item : ${items}">
-    <p>
-        <strong th:text="${item.product.name}"></strong><br>
-        Aantal: <span th:text="${item.quantity}"></span>
-    </p>
-    <hr>
-</div>
+<div th:if="${!#lists.isEmpty(items)}">
 
-<a href="/checkout">Ga naar checkout</a><br>
-<a href="/products">Verder winkelen</a>
+    <div th:each="item : ${items}">
+        <h3 th:text="${item.product.name}"></h3>
+        <p>
+            Aantal:
+            <span th:text="${item.quantity}"></span>
+        </p>
+        <hr/>
+    </div>
+
+    <form method="get" action="/checkout">
+        <button type="submit">Bestelling bevestigen</button>
+    </form>
+    <form th:action="@{/checkout}" method="post">
+        <button type="submit">Bestelling bevestigen</button>
+    </form>
+
+
+    <br/>
+
+    <form method="post" action="/cart/clear">
+        <button type="submit">Winkelmand leegmaken</button>
+    </form>
+
+    <br/>
+    <a href="/products">Verder winkelen</a>
+
+</div>
 
 </body>
 </html>
