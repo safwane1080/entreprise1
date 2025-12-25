@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Checkout</title>
+</head>
 <body>
 
-<h1>Checkout</h1>
+<h2>Checkout</h2>
 
-<div th:each="item : ${items}">
-    <p>
-        <strong th:text="${item.product.name}"></strong>
-        (Aantal: <span th:text="${item.quantity}"></span>)
-    </p>
+<div th:if="${#lists.isEmpty(items)}">
+    <p>Je winkelmand is leeg.</p>
+    <a href="/products">Ga terug naar producten</a>
 </div>
 
-<form method="post" action="/checkout/confirm">
-    <button type="submit">Bevestig bestelling</button>
-</form>
+<div th:if="${!#lists.isEmpty(items)}">
+
+    <h3>Overzicht</h3>
+
+    <div th:each="item : ${items}">
+        <p>
+            <strong th:text="${item.product.name}"></strong><br>
+            Aantal: <span th:text="${item.quantity}"></span>
+        </p>
+        <hr>
+    </div>
+
+    <form method="post" action="/checkout/confirm">
+        <button type="submit">Bevestig bestelling</button>
+    </form>
+
+</div>
+
+<a href="/cart">Terug naar winkelmand</a>
 
 </body>
 </html>

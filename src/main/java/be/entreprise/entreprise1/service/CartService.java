@@ -4,16 +4,19 @@ import be.entreprise.entreprise1.model.CartItem;
 import be.entreprise.entreprise1.model.Product;
 import be.entreprise.entreprise1.model.User;
 import be.entreprise.entreprise1.repository.CartItemRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CartService {
 
     private final CartItemRepository cartItemRepository;
+
+    // ✅ EXPLICIETE CONSTRUCTOR (BELANGRIJK)
+    public CartService(CartItemRepository cartItemRepository) {
+        this.cartItemRepository = cartItemRepository;
+    }
 
     public List<CartItem> getCart(User user) {
         return cartItemRepository.findByUser(user);

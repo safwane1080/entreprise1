@@ -6,6 +6,7 @@ import be.entreprise.entreprise1.model.User;
 import be.entreprise.entreprise1.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -13,7 +14,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    // ✅ EXPLICIETE CONSTRUCTOR (PROBLEEM OPGELOST)
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
@@ -23,6 +23,7 @@ public class OrderService {
         Order order = new Order();
         order.setUser(user);
         order.setItems(items);
+        order.setCreatedAt(LocalDateTime.now());
 
         for (CartItem item : items) {
             item.setOrder(order);

@@ -20,7 +20,7 @@ public class CheckoutController {
     private final OrderService orderService;
     private final UserService userService;
 
-    // ✅ EXPLICIETE CONSTRUCTOR (belangrijk!)
+    // ✅ EXPLICIETE CONSTRUCTOR (MAVEN ZIET DEZE)
     public CheckoutController(
             CartService cartService,
             OrderService orderService,
@@ -35,6 +35,7 @@ public class CheckoutController {
     public String checkout(Authentication auth, Model model) {
         User user = userService.findByEmail(auth.getName());
         List<CartItem> items = cartService.getCart(user);
+
         model.addAttribute("items", items);
         return "checkout";
     }

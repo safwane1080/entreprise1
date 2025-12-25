@@ -17,7 +17,6 @@ public class ProductController {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    // ✅ EXPLICIETE CONSTRUCTOR (BELANGRIJK)
     public ProductController(ProductRepository productRepository,
                              CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
@@ -25,21 +24,20 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String showProducts(
-            @RequestParam(required = false) Long category,
-            Model model
-    ) {
+    public String products(@RequestParam(required = false) Long category,
+                           Model model) {
+
+        List<Category> categories = categoryRepository.findAll();
         List<Product> products;
 
-        if (category != null) {
-            Category cat = categoryRepository.findById(category).orElse(null);
-            products = productRepository.findByCategory(cat);
-        } else {
+        if (category == null) {
             products = productRepository.findAll();
+        } else {
+            products = productRepository.findByCategoryId(category);
         }
 
+        model.addAttribute("categories", categories);
         model.addAttribute("products", products);
-        model.addAttribute("categories", categoryRepository.findAll());
 
         return "products";
     }

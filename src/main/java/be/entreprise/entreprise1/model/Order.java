@@ -16,14 +16,12 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    private String status = "CONFIRMED";
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<CartItem> items;
 
-    // ===== GETTERS & SETTERS =====
+    private LocalDateTime createdAt;
+
+    private String status;
 
     public Long getId() {
         return id;
@@ -33,8 +31,8 @@ public class Order {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public List<CartItem> getItems() {
+        return items;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -45,11 +43,19 @@ public class Order {
         return status;
     }
 
-    public List<CartItem> getItems() {
-        return items;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setItems(List<CartItem> items) {
         this.items = items;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
