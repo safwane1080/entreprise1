@@ -13,10 +13,13 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String role;
 
+    // getters
     public Long getId() {
         return id;
     }
@@ -32,6 +35,8 @@ public class User {
     public String getRole() {
         return role;
     }
+
+    // setters
     public void setEmail(String email) {
         this.email = email;
     }

@@ -1,9 +1,9 @@
 package be.entreprise.entreprise1.controller;
 
 import be.entreprise.entreprise1.model.User;
+import be.entreprise.entreprise1.repository.UserRepository;
 import be.entreprise.entreprise1.service.CartService;
 import be.entreprise.entreprise1.service.OrderService;
-import be.entreprise.entreprise1.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,24 +13,26 @@ public class CheckoutController {
 
     private final CartService cartService;
     private final OrderService orderService;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     public CheckoutController(
             CartService cartService,
             OrderService orderService,
-            UserService userService
+            UserRepository userRepository
     ) {
         this.cartService = cartService;
         this.orderService = orderService;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/checkout")
     public String checkout(Authentication auth) {
 
-        User user = userService.findByEmail(auth.getName());
+        User user = userRepository
+                .findByEmail(auth.getName())
+                .orElseThrow();
 
-        orderService.placeOrder(user);   // ✅ bestaat nu
+        orderService.placeOrder(user);
         cartService.clearCart(user);
 
         return "redirect:/checkout/success";
