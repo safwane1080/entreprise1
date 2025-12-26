@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Mijn bestellingen</title>
+</head>
+<body>
+
+<h1>Mijn bestellingen</h1>
+
+<div th:if="${#lists.isEmpty(orders)}">
+  <p>Je hebt nog geen bestellingen.</p>
+</div>
+
+<div th:each="order : ${orders}">
+  <h3>Bestelling #<span th:text="${order.id}"></span></h3>
+  <p>Status: <span th:text="${order.status}"></span></p>
+  <p>Datum: <span th:text="${order.createdAt}"></span></p>
+
+  <ul>
+    <li th:each="item : ${order.items}">
+      <span th:text="${item.product.name}"></span>
+      (Aantal: <span th:text="${item.quantity}"></span>)
+    </li>
+  </ul>
+
+  <hr/>
+</div>
+
+<a href="/products">Verder winkelen</a>
+
+</body>
+</html>
