@@ -1,33 +1,63 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl">
 <head>
-    <title>Registratie</title>
+    <meta charset="UTF-8">
+    <title>Registreren | Art Equipment Rental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
 </head>
 <body>
-<h1>Registreren</h1>
 
-<p th:if="${error}" th:text="${error}" style="color:red;"></p>
-
-<form th:action="@{/register}" method="post">
-    <div>
-        <label>Naam:</label>
-        <input type="text" name="name" required>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="logo"></div>
+            <div>
+                Art Equipment Rental
+                <small>Reservatieplatform – Proof of Concept</small>
+            </div>
+        </div>
     </div>
+</header>
 
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email" required>
+<main class="auth-wrap">
+    <div class="card form">
+        <h2>Account aanmaken</h2>
+        <p class="muted">Registreer met je schoolaccount om materiaal te reserveren</p>
+
+        <!-- Foutmelding (optioneel via Thymeleaf) -->
+        <div class="alert" th:if="${error}">
+            <span th:text="${error}"></span>
+        </div>
+
+        <form method="post" action="/register" class="form-grid">
+            <div>
+                <label>Email</label>
+                <input type="email"
+                       name="email"
+                       placeholder="voornaam.achternaam@ehb.be"
+                       required>
+            </div>
+
+            <div>
+                <label>Wachtwoord</label>
+                <input type="password"
+                       name="password"
+                       minlength="6"
+                       required>
+            </div>
+
+            <button type="submit" class="btn">
+                Registreren
+            </button>
+        </form>
+
+        <p class="muted" style="margin-top:14px;">
+            Al een account?
+            <a href="/login" style="font-weight:800;">Inloggen</a>
+        </p>
     </div>
-
-    <div>
-        <label>Wachtwoord:</label>
-        <input type="password" name="password" required>
-    </div>
-
-    <button type="submit">Account aanmaken</button>
-</form>
-
-<p>Heb je al een account? <a href="/login">Login</a></p>
+</main>
 
 </body>
 </html>

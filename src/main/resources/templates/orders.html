@@ -2,31 +2,55 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Mijn bestellingen</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        Art Equipment Rental
+        <small>Reservatieplatform – Proof of Concept</small>
+      </div>
+    </div>
+
+    <div class="nav">
+      <a href="/products">Catalogus</a>
+      <a href="/cart">Winkelmand</a>
+      <a href="/orders">Bestellingen</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+</div>
+
 <body>
+<div class="container">
 
-<h1>Mijn bestellingen</h1>
+  <div class="page-title">
+    <div>
+      <h1>Mijn bestellingen</h1>
+      <p class="subtitle">Overzicht van je geplaatste reservaties.</p>
+    </div>
+  </div>
 
-<div th:if="${#lists.isEmpty(orders)}">
-  <p>Je hebt nog geen bestellingen.</p>
+  <div th:if="${#lists.isEmpty(orders)}" class="card">
+    <p>Je hebt nog geen bestellingen.</p>
+  </div>
+
+  <div class="list" th:if="${!#lists.isEmpty(orders)}">
+    <div class="card" th:each="o : ${orders}">
+      <div class="item-row">
+        <div>
+          <h4>Order #<span th:text="${o.id}"></span></h4>
+          <div class="muted">Status: <strong th:text="${o.status}"></strong></div>
+          <div class="muted">Datum: <span th:text="${o.createdAt}"></span></div>
+        </div>
+        <span class="badge">Items: <span th:text="${#lists.size(o.items)}"></span></span>
+      </div>
+    </div>
+  </div>
+
 </div>
-
-<div th:each="order : ${orders}">
-  <h3>Bestelling #<span th:text="${order.id}"></span></h3>
-  <p>Status: <span th:text="${order.status}"></span></p>
-  <p>Datum: <span th:text="${order.createdAt}"></span></p>
-
-  <ul>
-    <li th:each="item : ${order.items}">
-      <span th:text="${item.product.name}"></span>
-      (Aantal: <span th:text="${item.quantity}"></span>)
-    </li>
-  </ul>
-
-  <hr/>
-</div>
-
-<a href="/products">Verder winkelen</a>
 
 </body>
 </html>

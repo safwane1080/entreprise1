@@ -1,33 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Inloggen | Art Equipment Rental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
 </head>
-<body>
+<body class="auth-page">
 
-<h1>Login</h1>
+<header class="topbar">
+    <h1>Art Equipment Rental Platform</h1>
+    <p>Materiaal reserveren voor studenten van de kunstopleiding</p>
+</header>
 
-<form th:action="@{/login}" method="post">
+<main class="auth-container">
+    <div class="auth-card">
+        <h2>Inloggen</h2>
+        <p class="subtitle">Gebruik je schoolaccount om materiaal te reserveren</p>
 
-    <label>Email:</label>
-    <input type="text" name="username" required />
-    <br/><br/>
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="username" placeholder="voornaam.achternaam@ehb.be" required>
+            </div>
 
-    <label>Wachtwoord:</label>
-    <input type="password" name="password" required />
-    <br/><br/>
+            <div class="form-group">
+                <label>Wachtwoord</label>
+                <input type="password" name="password" required>
+            </div>
 
-    <button type="submit">Login</button>
-</form>
+            <button type="submit" class="btn btn-primary">Inloggen</button>
+        </form>
 
-<p th:if="${param.error}" style="color:red;">
-    Foute login of wachtwoord
-</p>
-
-<p>
-    Nog geen account?
-    <a th:href="@{/register}">Registreer</a>
-</p>
+        <p class="auth-footer">
+            Nog geen account?
+            <a href="/register">Registreer hier</a>
+        </p>
+    </div>
+</main>
 
 </body>
 </html>

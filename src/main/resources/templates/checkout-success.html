@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bestelling geplaatst</title>
+    <title>Bevestiging</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<h2>✅ Bestelling geplaatst!</h2>
+<div class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="logo"></div>
+            <div>
+                Art Equipment Rental
+                <small>Reservatieplatform – Proof of Concept</small>
+            </div>
+        </div>
+        <div class="nav">
+            <a href="/products">Catalogus</a>
+            <a href="/cart">Winkelmand</a>
+            <a href="/orders">Bestellingen</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
 
-<p>Bedankt, je bestelling is succesvol verwerkt.</p>
+<div class="container" style="max-width:650px;">
+    <div class="card" style="padding:18px;">
+        <div style="font-weight:900; font-size:16px; color:#14532d; background:#dcfce7; border:1px solid #bbf7d0; padding:12px; border-radius:14px;">
+            ✔ Reservatie bevestigd
+        </div>
 
-<a href="/products">Verder winkelen</a>
+        <p style="margin:12px 0 0; color:#475569;">
+            Je bestelling is opgeslagen. Je kan je overzicht bekijken bij “Bestellingen”.
+        </p>
+
+        <div class="actions">
+            <a class="btn" href="/orders">Bekijk bestellingen</a>
+            <a class="btn btn-ghost" href="/products">Terug naar catalogus</a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
