@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 public class CartController {
 
@@ -20,36 +18,21 @@ public class CartController {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public CartController(
-            CartService cartService,
-            ProductRepository productRepository,
-            UserRepository userRepository
-    ) {
+    public CartController(CartService cartService,
+                          ProductRepository productRepository,
+                          UserRepository userRepository) {
         this.cartService = cartService;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/cart")
-    public String showCart(Authentication authentication, Model model) {
-
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User niet gevonden"));
-
-        List<CartItem> items = cartService.getCart(user);
-        model.addAttribute("items", items);
-
-        return "cart";
-    }
-
     @PostMapping("/cart/add")
-    public String addToCart(
-            Authentication authentication,
-            @RequestParam Long productId,
-            @RequestParam(defaultValue = "1") int quantity
-    ) {
+    public String addToCart(@RequestParam Long productId,
+                            @RequestParam int quantity,
+                            Authentication auth) {
 
-        User user = userRepository.findByEmail(authentication.getName())
+        String email = auth.getName();
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User niet gevonden"));
 
         Product product = productRepository.findById(productId)
@@ -60,14 +43,13 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @PostMapping("/cart/clear")
-    public String clearCart(Authentication authentication) {
+    @GetMapping("/cart")
+    public String viewCart(Authentication auth, Model model) {
 
-        User user = userRepository.findByEmail(authentication.getName())
+        User user = userRepository.findByEmail(auth.getName())
                 .orElseThrow(() -> new RuntimeException("User niet gevonden"));
 
-        cartService.clearCart(user);
-
-        return "redirect:/cart";
+        model.addAttribute("items", cartService.getCart(user));
+        return "cart";
     }
 }

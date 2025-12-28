@@ -6,6 +6,7 @@ import be.entreprise.entreprise1.service.CartService;
 import be.entreprise.entreprise1.service.OrderService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -28,13 +29,17 @@ public class CheckoutController {
     @PostMapping("/checkout")
     public String checkout(Authentication auth) {
 
-        User user = userRepository
-                .findByEmail(auth.getName())
-                .orElseThrow();
+        User user = userRepository.findByEmail(auth.getName())
+                .orElseThrow(() -> new RuntimeException("User niet gevonden"));
 
         orderService.placeOrder(user);
         cartService.clearCart(user);
 
         return "redirect:/checkout/success";
+    }
+
+    @GetMapping("/checkout/success")
+    public String success() {
+        return "checkout-success";
     }
 }

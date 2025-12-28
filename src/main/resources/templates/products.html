@@ -44,7 +44,11 @@
     </p>
 
     <!-- TOEVOEGEN AAN WINKELMAND -->
-    <form method="post" action="/cart/add">
+    <form method="post" th:action="@{/cart/add}">
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
         <input type="hidden" name="productId" th:value="${p.id}" />
         <input type="number" name="quantity" value="1" min="1" />
         <button type="submit">Toevoegen aan winkelmand</button>

@@ -19,9 +19,10 @@ public class SecurityConfig {
                                 "/login",
                                 "/register",
                                 "/css/**",
-                                "/products"
+                                "/products",
+                                "/checkout/**"
                         ).permitAll()
-                        .anyRequest().authenticated()
+                          .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
