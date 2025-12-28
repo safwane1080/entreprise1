@@ -1,90 +1,99 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Catalogus</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Catalogus | Art Equipment Rental</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
-<div class="topbar">
+<!-- TOPBAR -->
+<header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
             <div class="logo"></div>
             <div>
                 Art Equipment Rental
-                <small>Reservatieplatform – Proof of Concept</small>
+                <small>Kunstopleiding</small>
             </div>
         </div>
-        <div class="nav">
+        <nav class="nav">
             <a href="/products">Catalogus</a>
             <a href="/cart">Winkelmand</a>
-            <a href="/orders">Bestellingen</a>
             <a href="/logout">Logout</a>
-        </div>
+        </nav>
     </div>
-</div>
+</header>
 
-<div class="container">
+<main class="container">
 
+    <!-- PAGINA TITEL -->
     <div class="page-head">
         <div>
             <h1>Catalogus</h1>
-            <p>Zoek materiaal per categorie en voeg toe aan je winkelmand.</p>
+            <p>Kies het materiaal dat je nodig hebt voor je project</p>
         </div>
     </div>
 
+    <!-- FILTERS -->
     <div class="filters">
-        <a class="chip" href="/products">Alle producten</a>
-        <a class="chip" th:each="c : ${categories}"
+        <a href="/products" class="chip">Alle categorieën</a>
+
+        <a th:each="c : ${categories}"
            th:href="@{/products(category=${c.id})}"
+           class="chip"
            th:text="${c.name}">
         </a>
     </div>
 
-    <div th:if="${#lists.isEmpty(products)}" class="card" style="padding:16px;">
-        Geen producten gevonden.
-    </div>
+    <!-- PRODUCT GRID -->
+    <div class="grid">
 
-    <div class="grid" th:if="${!#lists.isEmpty(products)}">
         <div class="card product" th:each="p : ${products}">
-            <img class="product-img"
-                 th:src="${p.imageUrl}"
-                 alt="Product foto"
-                 onerror="this.src='https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?auto=format&fit=crop&w=1200&q=60'">
 
             <div class="product-body">
-                <h3 th:text="${p.name}">Naam</h3>
-                <p th:text="${p.description}">Beschrijving</p>
+                <h3 th:text="${p.name}">Productnaam</h3>
+
+                <p th:text="${p.description}">
+                    Productbeschrijving
+                </p>
 
                 <div class="meta">
-                    <span class="badge" th:text="${p.category.name}">Categorie</span>
+                    <span class="badge" th:text="${p.category.name}"></span>
 
-                    <span class="stock ok" th:if="${p.stock >= 6}">Op voorraad</span>
-                    <span class="stock low" th:if="${p.stock > 0 and p.stock < 6}">Bijna op</span>
-                    <span class="stock out" th:if="${p.stock == 0}">Uitverkocht</span>
+                    <span class="stock ok"
+                          th:if="${p.stock > 5}">
+                        Op voorraad
+                    </span>
+
+                    <span class="stock low"
+                          th:if="${p.stock > 0 and p.stock <= 5}">
+                        Beperkte stock
+                    </span>
+
+                    <span class="stock out"
+                          th:if="${p.stock == 0}">
+                        Niet beschikbaar
+                    </span>
                 </div>
 
-                <form method="post" action="/cart/add" class="row">
-                    <div>
-                        <label>Aantal</label>
-                        <input type="number" name="quantity" value="1" min="1" th:attr="max=${p.stock}">
-                    </div>
-
-                    <div>
-                        <input type="hidden" name="productId" th:value="${p.id}">
-                        <button type="submit" th:disabled="${p.stock == 0}">Toevoegen</button>
-                    </div>
+                <!-- TOEVOEGEN -->
+                <form th:if="${p.stock > 0}"
+                      method="post"
+                      action="/cart/add"
+                      class="row">
+                    <input type="hidden" name="productId" th:value="${p.id}">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit">Toevoegen</button>
                 </form>
-
-                <div class="muted" style="margin-top:10px;">
-                    Stock: <strong th:text="${p.stock}"></strong>
-                </div>
 
             </div>
         </div>
+
     </div>
 
-</div>
+</main>
 
 </body>
 </html>
+    
