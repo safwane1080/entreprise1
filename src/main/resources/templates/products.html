@@ -28,6 +28,7 @@
 
 <main class="container">
 
+    <!-- ===== PAGE HEADER ===== -->
     <div class="page-head">
         <div>
             <h1>Materiaalcatalogus</h1>
@@ -35,6 +36,7 @@
         </div>
     </div>
 
+    <!-- ===== FILTERS ===== -->
     <div class="filters">
         <a th:href="@{/products}" class="chip">Alle categorieën</a>
 
@@ -45,15 +47,18 @@
         </a>
     </div>
 
+    <!-- ===== PRODUCT GRID ===== -->
     <div class="grid">
 
+        <!-- Geen producten -->
         <div th:if="${#lists.isEmpty(products)}" class="card item">
             <p class="muted">Geen producten gevonden in deze categorie.</p>
         </div>
 
+        <!-- Product kaart -->
         <div th:each="p : ${products}" class="card product">
 
-            <!-- Afbeelding (placeholder) -->
+            <!-- Afbeelding -->
             <img class="product-img"
                  src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=60"
                  alt="Product afbeelding">
@@ -61,62 +66,56 @@
             <div class="product-body">
 
                 <h3 th:text="${p.name}">Productnaam</h3>
-                <p th:text="${p.description}">
-                    Beschrijving van het product
-                </p>
+                <p th:text="${p.description}">Beschrijving</p>
 
+                <!-- Meta info -->
                 <div class="meta">
                     <span class="badge" th:text="${p.category.name}">Categorie</span>
-
-                    <span th:if="${p.stock > 5}" class="stock ok">
-                        Beschikbaar
-                    </span>
-
-                    <span th:if="${p.stock > 0 and p.stock <= 5}" class="stock low">
-                        Beperkte stock
-                    </span>
-
-                    <span th:if="${p.stock == 0}" class="stock out">
-                        Uitverkocht
-                    </span>
-                </div>
-
-                <div class="row">
-                    <form th:action="@{/cart/add}" method="post" class="add-form">
-                        <input type="hidden" name="productId" th:value="${p.id}">
-
-                        <input type="number"
-                               name="quantity"
-                               value="1"
-                               min="1"
-                               th:max="${p.stock}"
-                               th:disabled="${p.stock == 0}"
-                               class="qty-input">
-
-                        <button type="submit"
-                                class="btn-add"
-                                th:disabled="${p.stock == 0}">
-                            + Toevoegen
-                        </button>
-                    </form>
-                </div>
-                <div class="meta">
-                    <span class="badge" th:text="${p.category.name}"></span>
                     <span class="badge">€ <span th:text="${p.pricePerDay}"></span> / dag</span>
+
+                    <span th:if="${p.stock > 5}" class="stock ok">Beschikbaar</span>
+                    <span th:if="${p.stock > 0 and p.stock <= 5}" class="stock low">Beperkte stock</span>
+                    <span th:if="${p.stock == 0}" class="stock out">Uitverkocht</span>
                 </div>
 
-                <form th:action="@{/cart/add}" method="post" class="add-form">
+                <!-- ===== RESERVEREN FORM ===== -->
+                <form th:action="@{/cart/add}" method="post" class="reserve-form">
+
                     <input type="hidden" name="productId" th:value="${p.id}">
 
-                    <input type="number" name="quantity" min="1" value="1" class="qty-input">
-                    <input type="number" name="days" min="1" value="1" class="qty-input">
+                    <div class="row">
+                        <div>
+                            <label>Dagen</label>
+                            <input type="number"
+                                   name="days"
+                                   min="1"
+                                   value="1"
+                                   required>
+                        </div>
 
-                    <button class="btn-add">+ Reserveren</button>
+                        <div>
+                            <label>Aantal</label>
+                            <input type="number"
+                                   name="quantity"
+                                   min="1"
+                                   value="1"
+                                   th:max="${p.stock}"
+                                   th:disabled="${p.stock == 0}"
+                                   required>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            class="btn"
+                            th:disabled="${p.stock == 0}">
+                        Reserveer
+                    </button>
+
                 </form>
-
 
             </div>
         </div>
+
     </div>
 
 </main>

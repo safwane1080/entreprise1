@@ -13,7 +13,6 @@ public class CartService {
 
     private final CartItemRepository cartItemRepository;
 
-    // ✅ EXPLICIETE CONSTRUCTOR (BELANGRIJK)
     public CartService(CartItemRepository cartItemRepository) {
         this.cartItemRepository = cartItemRepository;
     }
@@ -22,15 +21,17 @@ public class CartService {
         return cartItemRepository.findByUser(user);
     }
 
-    public void addToCart(User user, Product product, int quantity) {
+    public void addToCart(User user, Product product, int quantity, int days) {
 
         CartItem item = new CartItem();
         item.setUser(user);
         item.setProduct(product);
         item.setQuantity(quantity);
+        item.setDays(days);
 
         cartItemRepository.save(item);
     }
+
 
     public void clearCart(User user) {
         List<CartItem> items = cartItemRepository.findByUser(user);

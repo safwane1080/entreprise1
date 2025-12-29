@@ -13,13 +13,12 @@
             <div class="logo"></div>
             <div>
                 Art Equipment Rental
-                <small>Reservatieplatform – Proof of Concept</small>
+                <small>Reservatieplatform</small>
             </div>
         </div>
 
         <nav class="nav">
             <a th:href="@{/products}">Catalogus</a>
-            <a th:href="@{/cart}">Winkelmand</a>
             <a th:href="@{/logout}">Logout</a>
         </nav>
     </div>
@@ -28,60 +27,45 @@
 <main class="container">
 
     <div class="page-head">
-        <div>
-            <h1>Winkelmand</h1>
-            <p>Overzicht van het geselecteerde materiaal</p>
-        </div>
+        <h1>Winkelmand</h1>
+        <p>Overzicht van je reservatie</p>
     </div>
 
     <div th:if="${#lists.isEmpty(items)}" class="card item">
-        <p class="muted">
-            Je winkelmand is leeg.
-            Ga terug naar de catalogus om materiaal toe te voegen.
-        </p>
-
-        <div class="actions">
-            <a th:href="@{/products}" class="btn">Naar catalogus</a>
-        </div>
+        <p class="muted">Je winkelmand is leeg.</p>
     </div>
 
-    <div th:if="${!#lists.isEmpty(items)}" class="list">
+    <div class="list" th:if="${!#lists.isEmpty(items)}">
 
-        <div th:each="item : ${items}" class="card item">
-
+        <div class="card item" th:each="item : ${items}">
             <div class="item-line">
-                <div>
-                    <strong th:text="${item.product.name}">Productnaam</strong>
-                    <div class="muted" th:text="${item.product.category.name}">
-                        Categorie
-                    </div>
-                </div>
-
-                <div>
-                    <span class="badge">
-                        Aantal:
-                        <span th:text="${item.quantity}">1</span>
-                    </span>
-                </div>
+                <strong th:text="${item.product.name}"></strong>
+                <span>€ <span th:text="${item.subtotal}"></span></span>
             </div>
 
+            <p class="muted">
+                <span th:text="${item.quantity}"></span> stuk(s) ·
+                <span th:text="${item.days}"></span> dag(en) ·
+                € <span th:text="${item.product.pricePerDay}"></span> / dag
+            </p>
         </div>
+
+        <!-- TOTAAL -->
+
+        <div class="card item">
+            <div class="item-line">
+                <strong>Totaal</strong>
+                <strong>€ <span th:text="${#numbers.formatDecimal(total, 1, 2)}"></span></strong>
+            </div>
+        </div>
+
 
         <div class="actions">
-
-            <form method="post" action="/cart/clear">
-                <button type="submit" class="btn btn-ghost">
-                    Winkelmand leegmaken
-                </button>
+            <form th:action="@{/checkout}" method="post">
+                <button class="btn">Reservatie bevestigen</button>
             </form>
-
-            <form method="post" action="/checkout">
-                <button type="submit" class="btn btn-secondary">
-                    Bestelling bevestigen
-                </button>
-            </form>
-
         </div>
+
     </div>
 
 </main>
