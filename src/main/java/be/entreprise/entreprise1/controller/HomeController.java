@@ -1,13 +1,13 @@
 package be.entreprise.entreprise1.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "Application is running ✅";
+        return "home";
     }
 }

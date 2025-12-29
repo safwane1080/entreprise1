@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bevestiging</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Bestelling bevestigd | Art Equipment Rental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<div class="topbar">
+<header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
             <div class="logo"></div>
@@ -15,31 +16,42 @@
                 <small>Reservatieplatform – Proof of Concept</small>
             </div>
         </div>
-        <div class="nav">
-            <a href="/products">Catalogus</a>
-            <a href="/cart">Winkelmand</a>
-            <a href="/orders">Bestellingen</a>
-            <a href="/logout">Logout</a>
-        </div>
+
+        <nav class="nav">
+            <a th:href="@{/products}">Catalogus</a>
+            <a th:href="@{/cart}">Winkelmand</a>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
     </div>
-</div>
+</header>
 
-<div class="container" style="max-width:650px;">
-    <div class="card" style="padding:18px;">
-        <div style="font-weight:900; font-size:16px; color:#14532d; background:#dcfce7; border:1px solid #bbf7d0; padding:12px; border-radius:14px;">
-            ✔ Reservatie bevestigd
-        </div>
+<main class="container">
 
-        <p style="margin:12px 0 0; color:#475569;">
-            Je bestelling is opgeslagen. Je kan je overzicht bekijken bij “Bestellingen”.
+    <div class="card item" style="text-align:center; padding:40px 30px;">
+
+        <h1 style="font-size:32px; margin-bottom:10px;">
+            ✅ Reservatie bevestigd
+        </h1>
+
+        <p class="muted" style="max-width:520px; margin:0 auto 22px;">
+            Je aanvraag werd succesvol geregistreerd.
+            Het geselecteerde materiaal is gekoppeld aan jouw account
+            voor de gekozen periode.
         </p>
 
-        <div class="actions">
-            <a class="btn" href="/orders">Bekijk bestellingen</a>
-            <a class="btn btn-ghost" href="/products">Terug naar catalogus</a>
+        <div class="actions" style="justify-content:center;">
+            <a th:href="@{/products}" class="btn">
+                Terug naar catalogus
+            </a>
+
+            <a th:href="@{/cart}" class="btn btn-ghost">
+                Nieuwe reservatie
+            </a>
         </div>
+
     </div>
-</div>
+
+</main>
 
 </body>
 </html>

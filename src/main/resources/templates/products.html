@@ -3,97 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title>Catalogus | Art Equipment Rental</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<!-- TOPBAR -->
+<!-- ================= TOPBAR ================= -->
 <header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
             <div class="logo"></div>
             <div>
                 Art Equipment Rental
-                <small>Kunstopleiding</small>
+                <small>Reservatieplatform – Proof of Concept</small>
             </div>
         </div>
+
         <nav class="nav">
-            <a href="/products">Catalogus</a>
-            <a href="/cart">Winkelmand</a>
-            <a href="/logout">Logout</a>
+            <a th:href="@{/products}">Catalogus</a>
+            <a th:href="@{/cart}">Winkelmand</a>
+            <a th:href="@{/logout}">Logout</a>
         </nav>
     </div>
 </header>
 
 <main class="container">
 
-    <!-- PAGINA TITEL -->
     <div class="page-head">
         <div>
-            <h1>Catalogus</h1>
-            <p>Kies het materiaal dat je nodig hebt voor je project</p>
+            <h1>Materiaalcatalogus</h1>
+            <p>Reserveer professioneel materiaal voor je artistieke projecten</p>
         </div>
     </div>
 
-    <!-- FILTERS -->
     <div class="filters">
-        <a href="/products" class="chip">Alle categorieën</a>
+        <a th:href="@{/products}" class="chip">Alle categorieën</a>
 
         <a th:each="c : ${categories}"
            th:href="@{/products(category=${c.id})}"
-           class="chip"
-           th:text="${c.name}">
+           th:text="${c.name}"
+           class="chip">
         </a>
     </div>
 
-    <!-- PRODUCT GRID -->
     <div class="grid">
 
-        <div class="card product" th:each="p : ${products}">
+        <div th:if="${#lists.isEmpty(products)}" class="card item">
+            <p class="muted">Geen producten gevonden in deze categorie.</p>
+        </div>
+
+        <div th:each="p : ${products}" class="card product">
+
+            <!-- Afbeelding (placeholder) -->
+            <img class="product-img"
+                 src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=60"
+                 alt="Product afbeelding">
 
             <div class="product-body">
-                <h3 th:text="${p.name}">Productnaam</h3>
 
+                <h3 th:text="${p.name}">Productnaam</h3>
                 <p th:text="${p.description}">
-                    Productbeschrijving
+                    Beschrijving van het product
                 </p>
 
                 <div class="meta">
-                    <span class="badge" th:text="${p.category.name}"></span>
+                    <span class="badge" th:text="${p.category.name}">Categorie</span>
 
-                    <span class="stock ok"
-                          th:if="${p.stock > 5}">
-                        Op voorraad
+                    <span th:if="${p.stock > 5}" class="stock ok">
+                        Beschikbaar
                     </span>
 
-                    <span class="stock low"
-                          th:if="${p.stock > 0 and p.stock <= 5}">
+                    <span th:if="${p.stock > 0 and p.stock <= 5}" class="stock low">
                         Beperkte stock
                     </span>
 
-                    <span class="stock out"
-                          th:if="${p.stock == 0}">
-                        Niet beschikbaar
+                    <span th:if="${p.stock == 0}" class="stock out">
+                        Uitverkocht
                     </span>
                 </div>
 
-                <!-- TOEVOEGEN -->
-                <form th:if="${p.stock > 0}"
-                      method="post"
-                      action="/cart/add"
-                      class="row">
+                <div class="row">
+                    <form th:action="@{/cart/add}" method="post" class="add-form">
+                        <input type="hidden" name="productId" th:value="${p.id}">
+
+                        <input type="number"
+                               name="quantity"
+                               value="1"
+                               min="1"
+                               th:max="${p.stock}"
+                               th:disabled="${p.stock == 0}"
+                               class="qty-input">
+
+                        <button type="submit"
+                                class="btn-add"
+                                th:disabled="${p.stock == 0}">
+                            + Toevoegen
+                        </button>
+                    </form>
+                </div>
+                <div class="meta">
+                    <span class="badge" th:text="${p.category.name}"></span>
+                    <span class="badge">€ <span th:text="${p.pricePerDay}"></span> / dag</span>
+                </div>
+
+                <form th:action="@{/cart/add}" method="post" class="add-form">
                     <input type="hidden" name="productId" th:value="${p.id}">
-                    <input type="number" name="quantity" value="1" min="1">
-                    <button type="submit">Toevoegen</button>
+
+                    <input type="number" name="quantity" min="1" value="1" class="qty-input">
+                    <input type="number" name="days" min="1" value="1" class="qty-input">
+
+                    <button class="btn-add">+ Reserveren</button>
                 </form>
+
 
             </div>
         </div>
-
     </div>
 
 </main>
 
 </body>
 </html>
-    

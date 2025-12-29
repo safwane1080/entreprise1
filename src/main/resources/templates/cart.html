@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Winkelmand</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Winkelmand | Art Equipment Rental</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<div class="topbar">
+<header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
             <div class="logo"></div>
@@ -15,59 +16,75 @@
                 <small>Reservatieplatform – Proof of Concept</small>
             </div>
         </div>
-        <div class="nav">
-            <a href="/products">Catalogus</a>
-            <a href="/cart">Winkelmand</a>
-            <a href="/orders">Bestellingen</a>
-            <a href="/logout">Logout</a>
-        </div>
-    </div>
-</div>
 
-<div class="container">
+        <nav class="nav">
+            <a th:href="@{/products}">Catalogus</a>
+            <a th:href="@{/cart}">Winkelmand</a>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
 
     <div class="page-head">
         <div>
             <h1>Winkelmand</h1>
-            <p>Controleer je items en bevestig je reservatie.</p>
+            <p>Overzicht van het geselecteerde materiaal</p>
         </div>
     </div>
 
-    <div th:if="${#lists.isEmpty(items)}" class="card" style="padding:16px;">
-        Je winkelmand is leeg.
+    <div th:if="${#lists.isEmpty(items)}" class="card item">
+        <p class="muted">
+            Je winkelmand is leeg.
+            Ga terug naar de catalogus om materiaal toe te voegen.
+        </p>
+
         <div class="actions">
-            <a class="btn" href="/products">Ga naar catalogus</a>
+            <a th:href="@{/products}" class="btn">Naar catalogus</a>
         </div>
     </div>
 
     <div th:if="${!#lists.isEmpty(items)}" class="list">
-        <div class="card item" th:each="i : ${items}">
+
+        <div th:each="item : ${items}" class="card item">
+
             <div class="item-line">
                 <div>
-                    <h3 style="margin:0;" th:text="${i.product.name}">Product</h3>
-                    <div class="muted">Categorie: <strong th:text="${i.product.category.name}"></strong></div>
-                    <div class="muted">Aantal: <strong th:text="${i.quantity}"></strong></div>
+                    <strong th:text="${item.product.name}">Productnaam</strong>
+                    <div class="muted" th:text="${item.product.category.name}">
+                        Categorie
+                    </div>
                 </div>
-                <span class="badge">In cart</span>
+
+                <div>
+                    <span class="badge">
+                        Aantal:
+                        <span th:text="${item.quantity}">1</span>
+                    </span>
+                </div>
             </div>
+
         </div>
 
-        <div class="card item">
-            <div class="actions">
-                <form method="post" action="/checkout">
-                    <button type="submit">Bestelling bevestigen</button>
-                </form>
+        <div class="actions">
 
-                <form method="post" action="/cart/clear">
-                    <button type="submit" class="btn-secondary">Winkelmand leegmaken</button>
-                </form>
+            <form method="post" action="/cart/clear">
+                <button type="submit" class="btn btn-ghost">
+                    Winkelmand leegmaken
+                </button>
+            </form>
 
-                <a class="btn btn-ghost" href="/products">Verder kiezen</a>
-            </div>
+            <form method="post" action="/checkout">
+                <button type="submit" class="btn btn-secondary">
+                    Bestelling bevestigen
+                </button>
+            </form>
+
         </div>
     </div>
 
-</div>
+</main>
 
 </body>
 </html>
