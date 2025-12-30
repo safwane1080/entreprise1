@@ -7,14 +7,13 @@
 </head>
 <body>
 
-<!-- ================= TOPBAR ================= -->
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
       <div class="logo"></div>
       <div>
         Art Equipment Rental
-        <small>Reservatiegeschiedenis</small>
+        <small>Mijn reservaties</small>
       </div>
     </div>
 
@@ -27,7 +26,7 @@
   </div>
 </header>
 
-  <main class="container">
+<main class="container">
 
   <div class="page-head">
     <div>
@@ -43,49 +42,47 @@
   <div class="list" th:if="${!#lists.isEmpty(orders)}">
 
     <div class="card item" th:each="order : ${orders}">
-
       <div class="item-line">
-        <a th:href="@{/orders/{id}(id=${order.id})}"
-           style="font-weight:800;">
-          Reservatie #<span th:text="${order.id}"></span>
-        </a>
+        <div>
+          <strong>Reservatie #<span th:text="${order.id}"></span></strong>
+          <div class="muted" style="font-size:13px;">
+            <span th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+          </div>
+        </div>
 
-
-        <span class="status-badge"
-              th:classappend="
-                        ${order.status == 'BEVESTIGD'} ? 'status-confirmed' :
-                        ${order.status == 'OPGEHAALD'} ? 'status-active' :
-                        ${order.status == 'TERUGGEBRACHT'} ? 'status-done' :
-                        'status-cancelled'">
-
-                    <span th:text="${order.status}"></span>
+        <span th:switch="${order.status}">
+                    <span th:case="'BEVESTIGD'" class="status-badge status-confirmed">
+                        Bevestigd
+                    </span>
+                    <span th:case="'OPGEHAALD'" class="status-badge status-active">
+                        Opgehaald
+                    </span>
+                    <span th:case="'TERUGGEBRACHT'" class="status-badge status-done">
+                        Teruggebracht
+                    </span>
+                    <span th:case="*" class="status-badge status-default">
+                        <span th:text="${order.status}"></span>
+                    </span>
                 </span>
       </div>
 
-      <p class="muted">
-        Datum:
-        <span th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+      <p class="muted" style="margin-top:10px;">
+        <strong>Totaal:</strong>
+        € <span th:text="${order.totalPrice}"></span>
       </p>
 
-      <!-- ITEMS -->
-      <ul class="muted">
-        <li th:each="item : ${order.items}">
-          <strong th:text="${item.product.name}"></strong>
-          —
-          <span th:text="${item.quantity}"></span> stuk(s),
-          <span th:text="${item.days}"></span> dag(en)
-          · € <span th:text="${item.product.pricePerDay}"></span> / dag
-        </li>
-      </ul>
-
-      <div class="item-line" style="margin-top:12px;">
-        <strong>Totaal</strong>
-        <strong>
-          € <span th:text="${order.totalPrice}"></span>
-        </strong>
+      <div style="margin-top:12px;">
+        <a th:href="@{/orders/{id}(id=${order.id})}"
+           class="btn btn-secondary">
+          Bekijk details
+        </a>
       </div>
 
     </div>
+      <div th:if="${error}" class="alert alert-error">
+          <p th:text="${error}"></p>
+      </div>
+
   </div>
 
 </main>

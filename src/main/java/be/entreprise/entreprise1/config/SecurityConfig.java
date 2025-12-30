@@ -17,7 +17,7 @@ public class SecurityConfig {
                 // Voor POC: CSRF uitgeschakeld (vermijdt POST/Thymeleaf issues)
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-    
+
                 // Autorisaties
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -27,6 +27,7 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/checkout/",
                                 "/products",
+                                "/orders/**",
                                 "/h2-console/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")

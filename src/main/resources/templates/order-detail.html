@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
-    <title>Reservatie detail</title>
+    <title>Reservatie detail | Art Equipment Rental</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -19,7 +21,7 @@
 
         <nav class="nav">
             <a th:href="@{/products}">Catalogus</a>
-            <a th:href="@{/orders}">Mijn reservaties</a>
+            <a th:href="@{/orders}" class="active">Mijn reservaties</a>
             <a th:href="@{/logout}">Logout</a>
         </nav>
     </div>
@@ -31,29 +33,41 @@
         <div>
             <h1>Reservatie #<span th:text="${order.id}"></span></h1>
             <p>
-                Geplaatst op
+                Aangemaakt op
                 <strong th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></strong>
             </p>
         </div>
 
-        <span class="status-badge status-confirmed"
-              th:text="${order.status}">
+        <span th:switch="${order.status}">
+            <span th:case="'BEVESTIGD'" class="status-badge status-confirmed">
+                Bevestigd
+            </span>
+            <span th:case="'OPGEHAALD'" class="status-badge status-active">
+                Opgehaald
+            </span>
+            <span th:case="'TERUGGEBRACHT'" class="status-badge status-done">
+                Teruggebracht
+            </span>
+            <span th:case="*" class="status-badge status-default">
+                <span th:text="${order.status}"></span>
+            </span>
         </span>
     </div>
 
-    <div class="card item">
-        <h3>Gereserveerd materiaal</h3>
+    <div class="list">
 
-        <div class="list">
-            <div class="item-line"
-                 th:each="item : ${order.items}">
+        <div class="card item"
+             th:each="item : ${order.items}"
+             th:if="${order.items != null}">
+
+            <div class="item-line">
                 <div>
                     <strong th:text="${item.product.name}"></strong>
-                    <p class="muted">
+                    <div class="muted" style="font-size:13px;">
                         <span th:text="${item.quantity}"></span> stuk(s) ·
                         <span th:text="${item.days}"></span> dag(en) ·
                         € <span th:text="${item.product.pricePerDay}"></span> / dag
-                    </p>
+                    </div>
                 </div>
 
                 <strong>
@@ -61,20 +75,44 @@
                 </strong>
             </div>
         </div>
-    </div>
 
-    <div class="card item">
-        <div class="item-line">
-            <strong>Totaal te betalen</strong>
-            <strong style="font-size:18px;">
-                € <span th:text="${order.totalPrice}"></span>
-            </strong>
+        <div class="card item">
+            <div class="item-line">
+                <strong>Totaal te betalen</strong>
+                <strong style="font-size:20px;">
+                    € <span th:text="${order.totalPrice}"></span>
+                </strong>
+            </div>
         </div>
+
     </div>
 
-    <a th:href="@{/orders}" class="btn btn-ghost" style="margin-top:16px;">
-        ← Terug naar reservaties
-    </a>
+    <div class="actions">
+        <a th:href="@{/orders}" class="btn-ghost">← Terug naar overzicht</a>
+    </div>
+
+    <div class="actions">
+        <div sec:authorize="hasRole('ADMIN')">
+    </div>
+
+
+        <form th:if="${order.status == 'BEVESTIGD'}"
+              th:action="@{/orders/{id}/pickup(id=${order.id})}"
+              method="post">
+            <button class="btn btn-secondary">
+                Markeer als opgehaald
+            </button>
+        </form>
+
+        <form th:if="${order.status == 'OPGEHAALD'}"
+              th:action="@{/orders/{id}/return(id=${order.id})}"
+              method="post">
+            <button class="btn">
+                Markeer als teruggebracht
+            </button>
+        </form>
+
+    </div>
 
 </main>
 

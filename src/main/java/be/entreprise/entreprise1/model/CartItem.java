@@ -21,58 +21,23 @@ public class CartItem {
     private int quantity;
     private int days;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public int getDays() {
-        return days;
-    }
+    public Long getId() { return id; }
+    public Product getProduct() { return product; }
+    public User getUser() { return user; }
+    public Order getOrder() { return order; }
+    public int getQuantity() { return quantity; }
+    public int getDays() { return days; }
 
     public double getSubtotal() {
         if (product == null) return 0.0;
 
-        // Als pricePerDay een primitive double is: dit is al safe.
-        // Als het een Double is, gebruik dit:
-        Double ppd = product.getPricePerDay();
-        if (ppd == null) return 0.0;
-
-        return ppd * quantity * days;
+        double pricePerDay = product.getPricePerDay(); // primitive double
+        return pricePerDay * quantity * days;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setDays(int days) {
-        this.days = days;
-    }
+    public void setProduct(Product product) { this.product = product; }
+    public void setUser(User user) { this.user = user; }
+    public void setOrder(Order order) { this.order = order; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setDays(int days) { this.days = days; }
 }

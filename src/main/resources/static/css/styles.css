@@ -570,3 +570,31 @@ select:focus {
     background: #fee2e2;
     color: #7f1d1d;
 }
+/* ===== ORDER STATUS ===== */
+.status-badge{
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.status-confirmed{
+    background:#dcfce7;
+    color:#14532d;
+}
+
+.status-active{
+    background:#ffedd5;
+    color:#7c2d12;
+}
+
+.status-done{
+    background:#e0f2fe;
+    color:#075985;
+}
+
+.status-cancelled{
+    background:#fee2e2;
+    color:#7f1d1d;
+}

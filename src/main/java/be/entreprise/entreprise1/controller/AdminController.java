@@ -1,13 +1,15 @@
 package be.entreprise.entreprise1.controller;
 
-import be.entreprise.entreprise1.model.Order;
 import be.entreprise.entreprise1.repository.OrderRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final OrderRepository orderRepository;
@@ -18,24 +20,13 @@ public class AdminController {
 
     @GetMapping
     public String dashboard(Model model) {
-
-        model.addAttribute(
-                "orders",
-                orderRepository.findAllByOrderByCreatedAtDesc()
-        );
-
+        model.addAttribute("orders", orderRepository.findAllByOrderByCreatedAtDesc());
         return "admin-dashboard";
     }
 
-    @PostMapping("/order/status")
-    public String updateStatus(
-            @RequestParam Long orderId,
-            @RequestParam String status
-    ) {
-        Order order = orderRepository.findById(orderId).orElseThrow();
-        order.setStatus(status);
-        orderRepository.save(order);
-
-        return "redirect:/admin";
+    @GetMapping("/orders")
+    public String adminOrders(Model model) {
+        model.addAttribute("orders", orderRepository.findAllByOrderByCreatedAtDesc());
+        return "admin-orders";
     }
 }
