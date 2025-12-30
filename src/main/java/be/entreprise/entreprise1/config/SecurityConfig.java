@@ -14,18 +14,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                // Voor POC: CSRF uitgeschakeld (vermijdt POST/Thymeleaf issues)
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
-                // Autorisaties
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
                                 "/login",
                                 "/register",
                                 "/css/**",
-                                "/checkout/",
                                 "/products",
                                 "/orders/**",
                                 "/h2-console/**"
@@ -34,18 +31,15 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-
-                // Login configuratie
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .usernameParameter("username")
+                        .usernameParameter("email")   // 🔥 FIX
                         .passwordParameter("password")
                         .defaultSuccessUrl("/products", true)
                         .permitAll()
                 )
 
-                // Logout configuratie
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")

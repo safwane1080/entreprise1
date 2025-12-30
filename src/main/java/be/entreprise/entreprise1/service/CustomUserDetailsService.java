@@ -2,8 +2,11 @@ package be.entreprise.entreprise1.service;
 
 import be.entreprise.entreprise1.model.User;
 import be.entreprise.entreprise1.repository.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -20,12 +23,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("User niet gevonden: " + email));
+                        new UsernameNotFoundException("User niet gevonden"));
 
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .roles(user.getRole())
-                .build();
-    }
-}
+        String role = user.getRole();
+
+        // 🔒 GARANDEER ROLE_ PREFIX
+        if (!role.startsWith("ROLE_")) {
+            role = "ROLE_" + role;
+        }
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
+        );
+    }}
