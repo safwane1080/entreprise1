@@ -2,25 +2,24 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Profiel | Art Equipment Rental</title>
+    <title>Mijn profiel</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
-<!-- ================= TOPBAR ================= -->
 <header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
             <div class="logo"></div>
             <div>
                 Art Equipment Rental
-                <small>Reservatieplatform</small>
+                <small>Gebruikersprofiel</small>
             </div>
         </div>
 
         <nav class="nav">
             <a th:href="@{/products}">Catalogus</a>
-            <a th:href="@{/cart}">Winkelmand</a>
+            <a th:href="@{/orders}">Mijn reservaties</a>
             <a th:href="@{/logout}">Logout</a>
         </nav>
     </div>
@@ -31,36 +30,34 @@
     <div class="page-head">
         <div>
             <h1>Mijn profiel</h1>
-            <p>Beheer je account en raadpleeg je reservaties</p>
+            <p>Accountinformatie en overzicht</p>
         </div>
     </div>
 
-    <!-- PROFIEL INFO -->
     <div class="grid">
 
         <div class="card item">
-            <h3>👤 Accountgegevens</h3>
+            <h3>Account</h3>
 
-            <p class="muted">
-                <strong>Email:</strong>
-                <span th:text="${user.email}"></span>
-            </p>
+            <p class="muted"><strong>Email</strong></p>
+            <p th:text="${user.email}"></p>
 
-            <p class="muted">
-                <strong>Rol:</strong>
-                <span th:text="${user.role}"></span>
-            </p>
+            <p class="muted"><strong>Rol</strong></p>
+            <span class="badge" th:text="${user.role}"></span>
         </div>
 
         <div class="card item">
-            <h3>📦 Mijn reservaties</h3>
-            <p class="muted">
-                Bekijk een overzicht van al je eerdere reservaties.
-            </p>
+            <h3>Overzicht</h3>
 
-            <a th:href="@{/orders}" class="btn">
-                Bekijk reservatiegeschiedenis
-            </a>
+            <div class="item-line">
+                <span>Aantal reservaties</span>
+                <strong th:text="${orderCount}"></strong>
+            </div>
+
+            <div class="actions" style="margin-top:16px;">
+                <a th:href="@{/orders}" class="btn">Bekijk reservaties</a>
+                <a th:href="@{/products}" class="btn btn-secondary">Nieuw reserveren</a>
+            </div>
         </div>
 
     </div>

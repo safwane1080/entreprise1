@@ -22,7 +22,6 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        // Voorkomt dubbele data bij herstart
         if (categoryRepository.count() > 0) return;
 
         Category belichting = new Category();
@@ -47,8 +46,7 @@ public class DataLoader implements CommandLineRunner {
         p1.setDescription("Bi-color LED paneel voor film en studio-opnames.");
         p1.setStock(6);
         p1.setCategory(belichting);
-        p1.setPricePerDay(1.50);
-
+        p1.setPricePerDay(15.00);
 
         Product p2 = new Product();
         p2.setName("Godox SL60W");
@@ -57,88 +55,75 @@ public class DataLoader implements CommandLineRunner {
         p2.setCategory(belichting);
         p2.setPricePerDay(12.00);
 
-
         Product p3 = new Product();
         p3.setName("RGB LED Tube");
         p3.setDescription("RGB tube voor creatieve belichting.");
         p3.setStock(8);
         p3.setCategory(belichting);
-        p2.setPricePerDay(12.00);
-        p2.setPricePerDay(12.00);
-
-
-
+        p3.setPricePerDay(8.00);
 
         Product p4 = new Product();
         p4.setName("XLR Kabel 5m");
         p4.setDescription("Audio kabel voor microfoons en mixers.");
         p4.setStock(20);
         p4.setCategory(kabels);
-        p2.setPricePerDay(12.00);
-
+        p4.setPricePerDay(2.00);
 
         Product p5 = new Product();
         p5.setName("XLR Kabel 10m");
         p5.setDescription("Lange XLR kabel voor podiumgebruik.");
         p5.setStock(12);
         p5.setCategory(kabels);
-        p2.setPricePerDay(12.00);
-
+        p5.setPricePerDay(3.00);
 
         Product p6 = new Product();
         p6.setName("HDMI Kabel 10m");
         p6.setDescription("HDMI kabel voor projectoren en schermen.");
         p6.setStock(8);
         p6.setCategory(kabels);
-        p2.setPricePerDay(12.00);
-
+        p6.setPricePerDay(3.50);
 
         Product p7 = new Product();
         p7.setName("Shure SM58");
         p7.setDescription("Dynamische microfoon voor zang en spraak.");
         p7.setStock(5);
         p7.setCategory(audio);
-        p2.setPricePerDay(12.00);
-
+        p7.setPricePerDay(7.00);
 
         Product p8 = new Product();
-        p8.setName("Audio Interface Focusrite 2i2");
+        p8.setName("Focusrite Scarlett 2i2");
         p8.setDescription("USB audio interface voor opnames.");
         p8.setStock(4);
         p8.setCategory(audio);
-        p2.setPricePerDay(12.00);
-
+        p8.setPricePerDay(10.00);
 
         Product p9 = new Product();
-        p9.setName("Mengpaneel Behringer Xenyx");
+        p9.setName("Behringer Xenyx Mengpaneel");
         p9.setDescription("Compact mengpaneel voor live audio.");
         p9.setStock(2);
         p9.setCategory(audio);
-        p2.setPricePerDay(12.00);
-
+        p9.setPricePerDay(18.00);
 
         Product p10 = new Product();
         p10.setName("Podiumelement 2x1m");
         p10.setDescription("Modulair podiumelement.");
         p10.setStock(12);
         p10.setCategory(podium);
-        p2.setPricePerDay(12.00);
+        p10.setPricePerDay(20.00);
 
         Product p11 = new Product();
         p11.setName("Rookmachine Chauvet");
         p11.setDescription("Rookmachine voor theater en shows.");
         p11.setStock(2);
         p11.setCategory(podium);
-        p2.setPricePerDay(12.00);
-
+        p11.setPricePerDay(25.00);
 
         Product p12 = new Product();
         p12.setName("Safety kabel");
         p12.setDescription("Beveiligingskabel voor lichtinstallaties.");
         p12.setStock(20);
         p12.setCategory(podium);
-        p2.setPricePerDay(12.00);
-
+        p12.setPricePerDay(1.00);
 
         productRepository.save(p1);
         productRepository.save(p2);

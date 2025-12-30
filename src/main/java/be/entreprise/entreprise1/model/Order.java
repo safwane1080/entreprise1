@@ -30,7 +30,9 @@ public class Order {
     public List<CartItem> getItems() { return items; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public String getStatus() { return status; }
-    public double getTotalPrice() { return totalPrice; }
+    public double getTotalPrice() { return items.stream()
+            .mapToDouble(CartItem::getSubtotal)
+            .sum(); }
 
     // ===== SETTERS =====
     public void setUser(User user) { this.user = user; }

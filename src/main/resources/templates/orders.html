@@ -27,7 +27,7 @@
   </div>
 </header>
 
-<main class="container">
+  <main class="container">
 
   <div class="page-head">
     <div>
@@ -45,9 +45,11 @@
     <div class="card item" th:each="order : ${orders}">
 
       <div class="item-line">
-        <strong>
+        <a th:href="@{/orders/{id}(id=${order.id})}"
+           style="font-weight:800;">
           Reservatie #<span th:text="${order.id}"></span>
-        </strong>
+        </a>
+
 
         <span class="status-badge"
               th:classappend="

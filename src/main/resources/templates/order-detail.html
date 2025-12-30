@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservatie detail</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="logo"></div>
+            <div>
+                Art Equipment Rental
+                <small>Reservatie detail</small>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <a th:href="@{/products}">Catalogus</a>
+            <a th:href="@{/orders}">Mijn reservaties</a>
+            <a th:href="@{/logout}">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="page-head">
+        <div>
+            <h1>Reservatie #<span th:text="${order.id}"></span></h1>
+            <p>
+                Geplaatst op
+                <strong th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></strong>
+            </p>
+        </div>
+
+        <span class="status-badge status-confirmed"
+              th:text="${order.status}">
+        </span>
+    </div>
+
+    <div class="card item">
+        <h3>Gereserveerd materiaal</h3>
+
+        <div class="list">
+            <div class="item-line"
+                 th:each="item : ${order.items}">
+                <div>
+                    <strong th:text="${item.product.name}"></strong>
+                    <p class="muted">
+                        <span th:text="${item.quantity}"></span> stuk(s) ·
+                        <span th:text="${item.days}"></span> dag(en) ·
+                        € <span th:text="${item.product.pricePerDay}"></span> / dag
+                    </p>
+                </div>
+
+                <strong>
+                    € <span th:text="${item.subtotal}"></span>
+                </strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="card item">
+        <div class="item-line">
+            <strong>Totaal te betalen</strong>
+            <strong style="font-size:18px;">
+                € <span th:text="${order.totalPrice}"></span>
+            </strong>
+        </div>
+    </div>
+
+    <a th:href="@{/orders}" class="btn btn-ghost" style="margin-top:16px;">
+        ← Terug naar reservaties
+    </a>
+
+</main>
+
+</body>
+</html>
