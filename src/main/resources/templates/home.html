@@ -14,78 +14,75 @@
             <div class="logo"></div>
             <div>
                 Art Equipment Rental
-                <small>Materiaal voor kunststudenten</small>
+                <small>Materiaal voor creatieve studenten</small>
             </div>
         </div>
 
         <nav class="nav">
             <a th:href="@{/products}">Catalogus</a>
+            <a th:href="@{/orders}">Mijn reservaties</a>
             <a th:href="@{/login}">Login</a>
-            <a th:href="@{/register}" class="btn">Registreren</a>
+            <a th:href="@{/register}" class="btn btn-secondary">Start nu</a>
         </nav>
     </div>
 </header>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-    <div class="hero-content">
+    <div class="hero-inner">
         <h1>Reserveer professioneel materiaal<br>voor je artistieke projecten</h1>
+
         <p>
-            Lampen, kabels, lichtpanelen en podiumelementen — eenvoudig te reserveren
-            voor eindwerken en projecten.
+            Van belichting en podiumelementen tot kabels en accessoires.
+            Speciaal ontworpen voor studenten van de kunstopleiding.
         </p>
 
         <div class="hero-actions">
-            <a th:href="@{/products}" class="btn btn-primary">Bekijk catalogus</a>
+            <a th:href="@{/products}" class="btn">Bekijk catalogus</a>
             <a th:href="@{/register}" class="btn btn-ghost">Account aanmaken</a>
         </div>
     </div>
 </section>
 
 <!-- ================= FEATURES ================= -->
-<main class="container">
+<section class="container">
+    <div class="page-head">
+        <h2>Wat kan je met dit platform?</h2>
+    </div>
 
-    <div class="features">
-        <div class="card feature">
-            <h3>🎭 Voor studenten</h3>
-            <p>
-                Speciaal ontwikkeld voor kunstopleidingen en studenten die
-                professioneel materiaal nodig hebben.
+    <div class="grid">
+        <div class="card item">
+            <h3>📦 Materiaal reserveren</h3>
+            <p class="muted">
+                Kies uit een duidelijke catalogus met professioneel materiaal,
+                beschikbaar per categorie.
             </p>
         </div>
 
-        <div class="card feature">
-            <h3>📦 Materiaalbeheer</h3>
-            <p>
-                Raadpleeg een duidelijke catalogus met categorieën zoals belichting,
-                kabels en podiumelementen.
+        <div class="card item">
+            <h3>🛒 Winkelmand & checkout</h3>
+            <p class="muted">
+                Reserveer materiaal voor meerdere dagen en bevestig je aanvraag
+                in één overzicht.
             </p>
         </div>
 
-        <div class="card feature">
-            <h3>🗓️ Reserveren in enkele klikken</h3>
-            <p>
-                Voeg materiaal toe aan je winkelmand, kies een periode en bevestig
-                je reservatie.
+        <div class="card item">
+            <h3>📑 Reservatiegeschiedenis</h3>
+            <p class="muted">
+                Raadpleeg al je eerdere reservaties en hou overzicht
+                over je projecten.
             </p>
         </div>
     </div>
+</section>
 
-    <!-- ================= CTA ================= -->
-    <div class="card cta">
-        <h2>Klaar om te starten?</h2>
-        <p class="muted">
-            Log in of maak een account aan en reserveer meteen het materiaal
-            dat je nodig hebt.
-        </p>
-
-        <div class="actions">
-            <a th:href="@{/login}" class="btn">Inloggen</a>
-            <a th:href="@{/register}" class="btn btn-secondary">Registreren</a>
-        </div>
-    </div>
-
-</main>
+<!-- ================= CTA ================= -->
+<section class="cta">
+    <h2>Klaar om te starten?</h2>
+    <p>Maak een account aan en reserveer vandaag nog materiaal.</p>
+    <a th:href="@{/register}" class="btn btn-secondary">Account aanmaken</a>
+</section>
 
 </body>
 </html>

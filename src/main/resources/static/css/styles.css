@@ -468,7 +468,6 @@ select:focus {
     }
 }
 
-/* ===== CTA ===== */
 .cta {
     padding: 30px;
     text-align: center;
@@ -491,4 +490,83 @@ select:focus {
     font-size: 14px;
     font-weight: 800;
     color: #2563eb;
+}
+
+.hero {
+    background: linear-gradient(135deg, #0b1220, #1e293b);
+    color: #ffffff;
+    padding: 90px 22px;
+}
+
+.hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 44px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    max-width: 620px;
+    font-size: 18px;
+    color: #cbd5f5;
+    margin-bottom: 28px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.cta {
+    background: #0f172a;
+    color: #ffffff;
+    text-align: center;
+    padding: 60px 22px;
+}
+
+.cta h2 {
+    margin-bottom: 10px;
+}
+
+.cta p {
+    margin-bottom: 18px;
+    color: #cbd5f5;
+}
+.profile-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.status-confirmed {
+    background: #dcfce7;
+    color: #14532d;
+}
+
+.status-active {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.status-done {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.status-cancelled {
+    background: #fee2e2;
+    color: #7f1d1d;
 }

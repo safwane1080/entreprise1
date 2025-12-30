@@ -2,31 +2,69 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Mijn profiel</title>
+    <title>Profiel | Art Equipment Rental</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 
+<!-- ================= TOPBAR ================= -->
 <header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
             <div class="logo"></div>
-            Art Equipment Rental
+            <div>
+                Art Equipment Rental
+                <small>Reservatieplatform</small>
+            </div>
         </div>
+
         <nav class="nav">
             <a th:href="@{/products}">Catalogus</a>
-            <a th:href="@{/orders}">Reservaties</a>
+            <a th:href="@{/cart}">Winkelmand</a>
             <a th:href="@{/logout}">Logout</a>
         </nav>
     </div>
 </header>
 
 <main class="container">
-    <div class="card" style="padding:24px;">
-        <h2>Mijn profiel</h2>
-        <p class="muted">Ingelogd als</p>
-        <strong th:text="${email}"></strong>
+
+    <div class="page-head">
+        <div>
+            <h1>Mijn profiel</h1>
+            <p>Beheer je account en raadpleeg je reservaties</p>
+        </div>
     </div>
+
+    <!-- PROFIEL INFO -->
+    <div class="grid">
+
+        <div class="card item">
+            <h3>👤 Accountgegevens</h3>
+
+            <p class="muted">
+                <strong>Email:</strong>
+                <span th:text="${user.email}"></span>
+            </p>
+
+            <p class="muted">
+                <strong>Rol:</strong>
+                <span th:text="${user.role}"></span>
+            </p>
+        </div>
+
+        <div class="card item">
+            <h3>📦 Mijn reservaties</h3>
+            <p class="muted">
+                Bekijk een overzicht van al je eerdere reservaties.
+            </p>
+
+            <a th:href="@{/orders}" class="btn">
+                Bekijk reservatiegeschiedenis
+            </a>
+        </div>
+
+    </div>
+
 </main>
 
 </body>

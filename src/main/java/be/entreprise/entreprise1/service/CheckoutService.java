@@ -6,24 +6,30 @@ import be.entreprise.entreprise1.model.User;
 import be.entreprise.entreprise1.repository.CartItemRepository;
 import be.entreprise.entreprise1.repository.OrderRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class CheckoutService {
 
-    private final CartItemRepository cartItemRepository;
+    private final CartService cartService;
     private final OrderRepository orderRepository;
+    private final CartItemRepository cartItemRepository;
 
-    public CheckoutService(CartItemRepository cartItemRepository, OrderRepository orderRepository) {
-        this.cartItemRepository = cartItemRepository;
+    public CheckoutService(
+            CartService cartService,
+            OrderRepository orderRepository,
+            CartItemRepository cartItemRepository
+    ) {
+        this.cartService = cartService;
         this.orderRepository = orderRepository;
+        this.cartItemRepository = cartItemRepository;
     }
 
-    @Transactional
     public Order checkout(User user) {
-        List<CartItem> items = cartItemRepository.findByUser(user);
+
+        List<CartItem> items = cartService.getCart(user);
 
         if (items.isEmpty()) {
             throw new RuntimeException("Winkelmand is leeg");
@@ -31,14 +37,23 @@ public class CheckoutService {
 
         Order order = new Order();
         order.setUser(user);
-        order = orderRepository.save(order);
+        order.setCreatedAt(LocalDateTime.now());
+        order.setStatus("Bevestigd");
+
+        double total = items.stream()
+                .mapToDouble(CartItem::getSubtotal)
+                .sum();
+
+        order.setTotalPrice(total);
+
+        orderRepository.save(order);
 
         for (CartItem item : items) {
             item.setOrder(order);
+            cartItemRepository.save(item);
         }
-        cartItemRepository.saveAll(items);
 
-        cartItemRepository.deleteAll(items);
+        cartService.clearCart(user);
 
         return order;
     }

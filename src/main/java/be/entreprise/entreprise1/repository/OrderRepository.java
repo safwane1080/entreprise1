@@ -1,6 +1,6 @@
 package be.entreprise.entreprise1.repository;
 
-import be.entreprise.entreprise1.model.Order;
+import  be.entreprise.entreprise1.model.Order;
 import be.entreprise.entreprise1.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,45 +1,44 @@
 package be.entreprise.entreprise1.controller;
 
+import be.entreprise.entreprise1.model.Order;
 import be.entreprise.entreprise1.model.User;
 import be.entreprise.entreprise1.repository.UserRepository;
-import be.entreprise.entreprise1.service.CartService;
-import be.entreprise.entreprise1.service.OrderService;
-import org.springframework.security.core.Authentication;
+import be.entreprise.entreprise1.service.CheckoutService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.security.Principal;
 
 @Controller
 public class CheckoutController {
 
-    private final CartService cartService;
-    private final OrderService orderService;
+    private final CheckoutService checkoutService;
     private final UserRepository userRepository;
 
     public CheckoutController(
-            CartService cartService,
-            OrderService orderService,
+            CheckoutService checkoutService,
             UserRepository userRepository
     ) {
-        this.cartService = cartService;
-        this.orderService = orderService;
+        this.checkoutService = checkoutService;
         this.userRepository = userRepository;
     }
 
     @PostMapping("/checkout")
-    public String checkout(Authentication auth) {
+    public String doCheckout(Principal principal) {
 
-        User user = userRepository.findByEmail(auth.getName())
+        User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("User niet gevonden"));
 
-        orderService.placeOrder(user);
-        cartService.clearCart(user);
+        Order order = checkoutService.checkout(user);
 
-        return "redirect:/checkout/success";
+        return "redirect:/checkout/success?orderId=" + order.getId();
     }
 
     @GetMapping("/checkout/success")
-    public String success() {
+    public String checkoutSuccess(Long orderId, Model model) {
+        model.addAttribute("orderId", orderId);
         return "checkout-success";
     }
 }

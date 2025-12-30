@@ -1,72 +1,92 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Mijn bestellingen</title>
+  <meta charset="UTF-8">
+  <title>Mijn reservaties | Art Equipment Rental</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<div class="topbar">
+<body>
+
+<!-- ================= TOPBAR ================= -->
+<header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
       <div class="logo"></div>
       <div>
         Art Equipment Rental
-        <small>Reservatieplatform – Proof of Concept</small>
+        <small>Reservatiegeschiedenis</small>
       </div>
     </div>
 
-    <div class="nav">
-      <a href="/products">Catalogus</a>
-      <a href="/cart">Winkelmand</a>
-      <a href="/orders">Bestellingen</a>
-      <a href="/logout">Logout</a>
-    </div>
+    <nav class="nav">
+      <a th:href="@{/products}">Catalogus</a>
+      <a th:href="@{/cart}">Winkelmand</a>
+      <a th:href="@{/orders}" class="active">Mijn reservaties</a>
+      <a th:href="@{/logout}">Logout</a>
+    </nav>
   </div>
-</div>
+</header>
 
-<body>
-<div class="container">
+<main class="container">
 
-  <div class="page-title">
+  <div class="page-head">
     <div>
-      <h1>Mijn bestellingen</h1>
-      <p class="subtitle">Overzicht van je geplaatste reservaties.</p>
+      <h1>Mijn reservaties</h1>
+      <p>Overzicht van je materiaalreservaties</p>
     </div>
   </div>
 
-  <div th:if="${#lists.isEmpty(orders)}" class="card">
-    <p>Je hebt nog geen bestellingen.</p>
+  <div th:if="${#lists.isEmpty(orders)}" class="card item">
+    <p class="muted">Je hebt nog geen reservaties geplaatst.</p>
   </div>
 
   <div class="list" th:if="${!#lists.isEmpty(orders)}">
-    <div class="card" th:each="o : ${orders}">
-      <div class="item-row">
-        <div>
-          <h4>Order #<span th:text="${o.id}"></span></h4>
-          <div class="muted">Status: <strong th:text="${o.status}"></strong></div>
-          <div class="muted">Datum: <span th:text="${o.createdAt}"></span></div>
-        </div>
-        <span class="badge">Items: <span th:text="${#lists.size(o.items)}"></span></span>
+
+    <div class="card item" th:each="order : ${orders}">
+
+      <div class="item-line">
+        <strong>
+          Reservatie #<span th:text="${order.id}"></span>
+        </strong>
+
+        <span class="status-badge"
+              th:classappend="
+                        ${order.status == 'BEVESTIGD'} ? 'status-confirmed' :
+                        ${order.status == 'OPGEHAALD'} ? 'status-active' :
+                        ${order.status == 'TERUGGEBRACHT'} ? 'status-done' :
+                        'status-cancelled'">
+
+                    <span th:text="${order.status}"></span>
+                </span>
       </div>
+
+      <p class="muted">
+        Datum:
+        <span th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+      </p>
+
+      <!-- ITEMS -->
+      <ul class="muted">
+        <li th:each="item : ${order.items}">
+          <strong th:text="${item.product.name}"></strong>
+          —
+          <span th:text="${item.quantity}"></span> stuk(s),
+          <span th:text="${item.days}"></span> dag(en)
+          · € <span th:text="${item.product.pricePerDay}"></span> / dag
+        </li>
+      </ul>
+
+      <div class="item-line" style="margin-top:12px;">
+        <strong>Totaal</strong>
+        <strong>
+          € <span th:text="${order.totalPrice}"></span>
+        </strong>
+      </div>
+
     </div>
   </div>
 
-  <main class="container">
-    <h1>Reservatiegeschiedenis</h1>
-
-    <div class="list">
-      <div th:each="order : ${orders}" class="card item">
-        <div class="item-line">
-          <strong>Reservatie</strong>
-          <span class="badge" th:text="${order.status}"></span>
-        </div>
-        <p class="muted">
-          Datum: <span th:text="${order.createdAt}"></span>
-        </p>
-      </div>
-    </div>
-  </main>
-
-</div>
+</main>
 
 </body>
 </html>

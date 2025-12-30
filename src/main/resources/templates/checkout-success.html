@@ -2,7 +2,7 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Bestelling bevestigd | Art Equipment Rental</title>
+    <title>Reservatie bevestigd | Art Equipment Rental</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -13,13 +13,14 @@
             <div class="logo"></div>
             <div>
                 Art Equipment Rental
-                <small>Reservatieplatform – Proof of Concept</small>
+                <small>Reservatieplatform</small>
             </div>
         </div>
 
         <nav class="nav">
             <a th:href="@{/products}">Catalogus</a>
-            <a th:href="@{/cart}">Winkelmand</a>
+            <a th:href="@{/orders}">Mijn reservaties</a>
+            <a th:href="@{/profile}">Profiel</a>
             <a th:href="@{/logout}">Logout</a>
         </nav>
     </div>
@@ -27,27 +28,42 @@
 
 <main class="container">
 
-    <div class="card item" style="text-align:center; padding:40px 30px;">
+    <div class="card" style="max-width:640px;margin:60px auto;text-align:center;padding:40px;">
 
-        <h1 style="font-size:32px; margin-bottom:10px;">
-            ✅ Reservatie bevestigd
-        </h1>
+        <div style="
+            width:72px;
+            height:72px;
+            border-radius:50%;
+            background:#dcfce7;
+            color:#166534;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:36px;
+            margin:0 auto 20px;">
+            ✓
+        </div>
 
-        <p class="muted" style="max-width:520px; margin:0 auto 22px;">
-            Je aanvraag werd succesvol geregistreerd.
-            Het geselecteerde materiaal is gekoppeld aan jouw account
-            voor de gekozen periode.
+        <h1 style="margin-bottom:10px;">Reservatie bevestigd</h1>
+
+        <p class="muted" style="font-size:16px;">
+            Je materiaal werd succesvol gereserveerd.<br>
+            Je kan dit nu ophalen binnen de gekozen periode.
         </p>
 
-        <div class="actions" style="justify-content:center;">
-            <a th:href="@{/products}" class="btn">
-                Terug naar catalogus
+        <div class="actions" style="justify-content:center;margin-top:30px;">
+            <a th:href="@{/orders}" class="btn">
+                Bekijk mijn reservaties
             </a>
 
-            <a th:href="@{/cart}" class="btn btn-ghost">
-                Nieuwe reservatie
+            <a th:href="@{/products}" class="btn btn-secondary">
+                Terug naar catalogus
             </a>
         </div>
+
+        <p class="muted" style="margin-top:24px;font-size:13px;">
+            Heb je vragen? Contacteer de technische dienst van de opleiding.
+        </p>
 
     </div>
 
