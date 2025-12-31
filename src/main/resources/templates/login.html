@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Inloggen | Art Equipment Rental</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
-
 </head>
+
 <body class="auth-page">
 
 <header class="topbar">
-    <h1>Art Equipment Rental Platform</h1>
-    <p>Materiaal reserveren voor studenten van de kunstopleiding</p>
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="logo"></div>
+            <div>
+                Art Equipment Rental
+                <small>Reservatieplatform – Proof of Concept</small>
+            </div>
+        </div>
+    </div>
 </header>
 
 <main class="auth-container">
@@ -18,22 +25,24 @@
         <h2>Inloggen</h2>
         <p class="subtitle">Gebruik je schoolaccount om materiaal te reserveren</p>
 
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/login}" method="post" class="form-grid">
 
-            <label>Email</label>
-            <input type="email" name="email" required>
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="voornaam.achternaam@ehb.be" required>
+            </div>
 
-            <label>Password</label>
-            <input type="password" name="password" required>
+            <div>
+                <label>Wachtwoord</label>
+                <input type="password" name="password" required>
+            </div>
 
-            <button type="submit">Login</button>
-
+            <button type="submit" class="btn">Login</button>
         </form>
-
 
         <p class="auth-footer">
             Nog geen account?
-            <a href="/register">Registreer hier</a>
+            <a th:href="@{/register}" style="font-weight:800;">Registreer hier</a>
         </p>
     </div>
 </main>

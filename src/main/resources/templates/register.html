@@ -20,8 +20,10 @@
     </div>
 </header>
 
-<main class="auth-wrap">
-    <div class="card form">
+<main class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+
         <h2>Account aanmaken</h2>
         <p class="muted">Registreer met je schoolaccount om materiaal te reserveren</p>
 
@@ -30,32 +32,41 @@
             <span th:text="${error}"></span>
         </div>
 
-        <form method="post" action="/register" class="form-grid">
-            <div>
-                <label>Email</label>
-                <input type="email"
-                       name="email"
-                       placeholder="voornaam.achternaam@ehb.be"
-                       required>
-            </div>
+            <form method="post" action="/register" class="form-grid">
 
-            <div>
-                <label>Wachtwoord</label>
-                <input type="password"
-                       name="password"
-                       minlength="6"
-                       required>
-            </div>
+                <div>
+                    <label>Email</label>
+                    <input type="email"
+                           name="email"
+                           placeholder="voornaam.achternaam@ehb.be"
+                           required>
+                </div>
 
-            <button type="submit" class="btn">
-                Registreren
-            </button>
-        </form>
+                <div>
+                    <label>Wachtwoord</label>
+                    <input type="password"
+                           name="password"
+                           placeholder="Min. 8 tekens, 1 hoofdletter, 1 cijfer"
+                           required>
+                </div>
+
+                <div>
+                    <label>Bevestig wachtwoord</label>
+                    <input type="password"
+                           name="confirmPassword"
+                           required>
+                </div>
+
+                <button type="submit" class="btn">
+                    Registreren
+                </button>
+            </form>
 
         <p class="muted" style="margin-top:14px;">
             Al een account?
             <a href="/login" style="font-weight:800;">Inloggen</a>
         </p>
+        </div>
     </div>
 </main>
 
