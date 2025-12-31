@@ -858,3 +858,57 @@ select:focus {
     transform: translateY(0);
     box-shadow: none;
 }
+/* FIX: Terug naar catalogus knop (cart) */
+.actions .btn-ghost {
+    background: #ffffff;
+    border: 1px solid #d7deea;
+    color: #2563eb;
+    font-weight: 800;
+    padding: 11px 16px;
+    border-radius: 14px;
+    transition:
+            background-color 0.15s ease,
+            box-shadow 0.15s ease,
+            transform 0.1s ease;
+}
+
+.actions .btn-ghost:hover {
+    background: #eef2ff;
+    box-shadow: 0 8px 18px rgba(37,99,235,0.25);
+    transform: translateY(-1px);
+}
+
+.actions .btn-ghost:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+/* ================= PROFILE PAGE ================= */
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #22c55e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    font-size: 15px;
+    font-weight: 700;
+}

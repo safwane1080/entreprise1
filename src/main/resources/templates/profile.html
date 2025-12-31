@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<html lang="nl"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Mijn profiel</title>
@@ -27,6 +28,7 @@
 
 <main class="container">
 
+    <!-- Pagina titel -->
     <div class="page-head">
         <div>
             <h1>Mijn profiel</h1>
@@ -34,27 +36,41 @@
         </div>
     </div>
 
+    <!-- Profiel inhoud -->
     <div class="grid">
 
+        <!-- Account card -->
         <div class="card item">
-            <h3>Account</h3>
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <span th:text="${user.email.substring(0,1).toUpperCase()}">U</span>
+                </div>
 
-            <p class="muted"><strong>Email</strong></p>
-            <p th:text="${user.email}"></p>
+                <div>
+                    <h3>Account</h3>
+                    <p class="muted">Persoonlijke gegevens</p>
+                </div>
+            </div>
 
-            <p class="muted"><strong>Rol</strong></p>
-            <span class="badge" th:text="${user.role}"></span>
+            <div class="profile-info">
+                <p class="muted"><strong>Email</strong></p>
+                <p th:text="${user.email}"></p>
+
+                <p class="muted"><strong>Rol</strong></p>
+                <span class="badge" th:text="${user.role}"></span>
+            </div>
         </div>
 
+        <!-- Overzicht card -->
         <div class="card item">
             <h3>Overzicht</h3>
 
-            <div class="item-line">
+            <div class="profile-stats">
                 <span>Aantal reservaties</span>
-                <strong th:text="${orderCount}"></strong>
+                <strong th:text="${orderCount}">0</strong>
             </div>
 
-            <div class="actions" style="margin-top:16px;">
+            <div class="actions">
                 <a th:href="@{/orders}" class="btn">Bekijk reservaties</a>
                 <a th:href="@{/products}" class="btn btn-secondary">Nieuw reserveren</a>
             </div>
