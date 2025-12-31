@@ -1,6 +1,8 @@
 package be.entreprise.entreprise1.model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,6 +25,12 @@ public class Order {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
+    private LocalDate startDate;
+
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    @Column(nullable = false)
     private String status;
 
     public Order() {
@@ -35,6 +43,7 @@ public class Order {
             this.status = "BEVESTIGD";
         }
     }
+
 
     public Long getId() {
         return id;
@@ -52,15 +61,16 @@ public class Order {
         return createdAt;
     }
 
-    public String getStatus() {
-        return status;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public String getStatusCssClass() {
-        if ("BEVESTIGD".equals(status)) return "status-confirmed";
-        if ("OPGEHAALD".equals(status)) return "status-active";
-        if ("TERUGGEBRACHT".equals(status)) return "status-done";
-        return "status-default";
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public double getTotalPrice() {
@@ -71,6 +81,13 @@ public class Order {
         return items.stream()
                 .mapToDouble(CartItem::getSubtotal)
                 .sum();
+    }
+
+    public String getStatusCssClass() {
+        if ("BEVESTIGD".equals(status)) return "status-confirmed";
+        if ("OPGEHAALD".equals(status)) return "status-active";
+        if ("TERUGGEBRACHT".equals(status)) return "status-done";
+        return "status-default";
     }
 
     public void setUser(User user) {
@@ -85,7 +102,16 @@ public class Order {
         this.createdAt = createdAt;
     }
 
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
+
 }

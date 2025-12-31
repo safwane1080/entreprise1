@@ -68,8 +68,21 @@
                 ← Terug naar catalogus
             </a>
 
-            <form th:action="@{/checkout}" method="post">
-                <button class="btn">Reservatie bevestigen</button>
+            <form th:action="@{/checkout}" method="post" class="card item" style="margin-top:14px;">
+
+                <label for="startDate">Startdatum reservatie</label>
+                <input type="date"
+                       id="startDate"
+                       name="startDate"
+                       required
+                       th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                       style="margin-top:8px;"/>
+
+
+                <div class="actions" style="margin-top:12px;">
+                    <button class="btn">Reservatie bevestigen</button>
+                </div>
+
             </form>
 
         </div>

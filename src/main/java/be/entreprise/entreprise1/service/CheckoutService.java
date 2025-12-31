@@ -8,6 +8,7 @@ import be.entreprise.entreprise1.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,23 +26,31 @@ public class CheckoutService {
     }
 
     @Transactional
-    public Order checkout(User user) {
+    public Order checkout(User user, LocalDate startDate) {
 
-        // ✅ Neem ALLE items van de user
         List<CartItem> items = cartItemRepository.findByUser(user);
 
         if (items == null || items.isEmpty()) {
             throw new IllegalStateException("Je winkelmand is leeg.");
         }
 
-        // ✅ Nieuwe order maken
+        // 🧠 langste huur bepaalt einddatum
+        int maxDays = items.stream()
+                .mapToInt(CartItem::getDays)
+                .max()
+                .orElse(1);
+
+        LocalDate endDate = startDate.plusDays(maxDays);
+
         Order order = new Order();
         order.setUser(user);
+        order.setStartDate(startDate);
+        order.setEndDate(endDate);
         order.setStatus("BEVESTIGD");
 
         Order savedOrder = orderRepository.save(order);
 
-        // ✅ Items koppelen aan order
+        // items koppelen aan order
         for (CartItem item : items) {
             item.setOrder(savedOrder);
         }

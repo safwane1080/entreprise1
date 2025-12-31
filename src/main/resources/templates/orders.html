@@ -45,10 +45,19 @@
       <div class="item-line">
         <div>
           <strong>Reservatie #<span th:text="${order.id}"></span></strong>
-          <div class="muted" style="font-size:13px;">
-            <span th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
-          </div>
+            <div class="muted" style="font-size:13px;">
+                <span th:text="${#temporals.format(order.startDate, 'dd/MM')}"></span>
+                →
+                <span th:text="${#temporals.format(order.endDate, 'dd/MM')}"></span>
+            </div>
+
         </div>
+          <div class="muted" style="font-size:13px;">
+              Periode:
+              <span th:text="${#temporals.format(order.startDate, 'dd/MM/yyyy')}"></span>
+              →
+              <span th:text="${#temporals.format(order.endDate, 'dd/MM/yyyy')}"></span>
+          </div>
 
         <span th:switch="${order.status}">
                     <span th:case="'BEVESTIGD'" class="status-badge status-confirmed">

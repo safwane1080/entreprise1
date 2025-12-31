@@ -34,13 +34,15 @@
             ✅ Reservatie succesvol bevestigd
         </div>
 
-        <div>
-            <h1>Reservatie #<span th:text="${order.id}"></span></h1>
-            <p>
-                Aangemaakt op
-                <strong th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></strong>
-            </p>
-        </div>
+        <p>
+            Periode:
+            <strong>
+                <span th:text="${#temporals.format(order.startDate, 'dd/MM/yyyy')}"></span>
+                →
+                <span th:text="${#temporals.format(order.endDate, 'dd/MM/yyyy')}"></span>
+            </strong>
+        </p>
+
 
         <span th:switch="${order.status}">
             <span th:case="'BEVESTIGD'" class="status-badge status-confirmed">
