@@ -20,6 +20,14 @@ public class Product {
 
     @ManyToOne
     private Category category;
+    private String imageUrl;
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Product() {}
 

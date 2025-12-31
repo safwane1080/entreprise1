@@ -24,21 +24,45 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String products(@RequestParam(required = false) Long category,
-                           Model model) {
+    public String products(
+            @RequestParam(required = false) Long category,
+            @RequestParam(required = false) String q,
+            Model model
+    ) {
 
         List<Category> categories = categoryRepository.findAll();
         List<Product> products;
 
-        if (category == null) {
+        boolean hasSearch = q != null && !q.trim().isEmpty();
+
+        if (category == null && !hasSearch) {
+            // Geen filter, geen zoekterm
             products = productRepository.findAll();
-        } else {
+
+        } else if (category != null && !hasSearch) {
+            // Alleen categorie
             products = productRepository.findByCategoryId(category);
+
+        } else if (category == null) {
+            // Alleen zoekterm
+            products = productRepository
+                    .findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(q, q);
+
+        } else {
+            // Categorie + zoekterm
+            products = productRepository
+                    .findByCategoryIdAndNameContainingIgnoreCaseOrCategoryIdAndDescriptionContainingIgnoreCase(
+                            category, q,
+                            category, q
+                    );
         }
 
         model.addAttribute("categories", categories);
         model.addAttribute("products", products);
+        model.addAttribute("q", q);
+        model.addAttribute("selectedCategory", category);
 
         return "products";
     }
+
 }

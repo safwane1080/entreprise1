@@ -30,6 +30,10 @@
 <main class="container">
 
     <div class="page-head">
+        <div class="order-success">
+            ✅ Reservatie succesvol bevestigd
+        </div>
+
         <div>
             <h1>Reservatie #<span th:text="${order.id}"></span></h1>
             <p>
@@ -54,9 +58,9 @@
         </span>
     </div>
 
-    <div class="list">
+    <div class="list order-detail">
 
-        <div class="card item"
+        <div class="card item order-item"
              th:each="item : ${order.items}"
              th:if="${order.items != null}">
 
@@ -76,7 +80,7 @@
             </div>
         </div>
 
-        <div class="card item">
+        <div class="card item order-total">
             <div class="item-line">
                 <strong>Totaal te betalen</strong>
                 <strong style="font-size:20px;">

@@ -36,6 +36,29 @@
             <p>Reserveer professioneel materiaal voor je artistieke projecten</p>
         </div>
     </div>
+    <!-- ===== SEARCH ===== -->
+    <form th:action="@{/products}" method="get" class="search-bar">
+
+        <!-- behoud categorie bij zoeken -->
+        <input type="hidden"
+               name="category"
+               th:if="${selectedCategory != null}"
+               th:value="${selectedCategory}"/>
+
+        <input type="text"
+               name="q"
+               placeholder="Zoek materiaal (bv. lamp, kabel, microfoon...)"
+               th:value="${q}"
+               class="search-input"/>
+
+        <button type="submit" class="btn">
+            Zoeken
+        </button>
+
+        <a th:href="@{/products}" class="btn-ghost">
+            Reset
+        </a>
+    </form>
 
     <!-- ===== FILTERS ===== -->
     <div class="filters">
@@ -61,7 +84,7 @@
 
             <!-- Afbeelding -->
             <img class="product-img"
-                 src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=60"
+                 th:src="${p.imageUrl != null ? p.imageUrl : 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=60'}"
                  alt="Product afbeelding">
 
             <div class="product-body">

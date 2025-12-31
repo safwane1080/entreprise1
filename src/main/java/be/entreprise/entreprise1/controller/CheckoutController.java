@@ -5,8 +5,6 @@ import be.entreprise.entreprise1.model.User;
 import be.entreprise.entreprise1.repository.UserRepository;
 import be.entreprise.entreprise1.service.CheckoutService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
@@ -17,10 +15,8 @@ public class CheckoutController {
     private final CheckoutService checkoutService;
     private final UserRepository userRepository;
 
-    public CheckoutController(
-            CheckoutService checkoutService,
-            UserRepository userRepository
-    ) {
+    public CheckoutController(CheckoutService checkoutService,
+                              UserRepository userRepository) {
         this.checkoutService = checkoutService;
         this.userRepository = userRepository;
     }
@@ -33,12 +29,7 @@ public class CheckoutController {
 
         Order order = checkoutService.checkout(user);
 
-        return "redirect:/checkout/success?orderId=" + order.getId();
-    }
-
-    @GetMapping("/checkout/success")
-    public String checkoutSuccess(Long orderId, Model model) {
-        model.addAttribute("orderId", orderId);
-        return "checkout-success";
+        // ✅ Stuur door naar detailpagina van de order
+        return "redirect:/orders/" + order.getId();
     }
 }
