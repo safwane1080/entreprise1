@@ -2,7 +2,7 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Mijn reservaties | Art Equipment Rental</title>
+  <title>Mijn reservaties | Art Equipment Rental EHB</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -12,7 +12,7 @@
     <div class="brand">
       <div class="logo"></div>
       <div>
-        Art Equipment Rental
+        Art Equipment Rental EHB
         <small>Mijn reservaties</small>
       </div>
     </div>
@@ -34,6 +34,11 @@
       <p>Overzicht van je materiaalreservaties</p>
     </div>
   </div>
+    <div class="actions" style="margin-bottom:16px;">
+        <a th:href="@{/products}" class="btn-ghost">
+            ← Terug naar catalogus
+        </a>
+    </div>
 
   <div th:if="${#lists.isEmpty(orders)}" class="card item">
     <p class="muted">Je hebt nog geen reservaties geplaatst.</p>

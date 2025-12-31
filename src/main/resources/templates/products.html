@@ -2,7 +2,7 @@
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Catalogus | Art Equipment Rental</title>
+    <title>Catalogus | Art Equipment Rental EHB</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
@@ -12,7 +12,7 @@
         <div class="brand">
             <div class="logo"></div>
             <div>
-                Art Equipment Rental
+                Art Equipment Rental EHB
                 <small>Reservatieplatform – Proof of Concept</small>
             </div>
         </div>
@@ -70,6 +70,50 @@
            class="chip">
         </a>
     </div>
+    <!-- ===== SORTEREN ===== -->
+    <form th:action="@{/products}" method="get" class="filters">
+
+        <!-- behoud categorie -->
+        <input type="hidden"
+               name="category"
+               th:if="${selectedCategory != null}"
+               th:value="${selectedCategory}" />
+
+        <!-- behoud zoekterm -->
+        <input type="hidden"
+               name="q"
+               th:if="${q != null}"
+               th:value="${q}" />
+
+        <select name="sort"
+                onchange="this.form.submit()"
+                class="chip">
+
+            <option value="">Sorteren op</option>
+
+            <option value="name_asc"
+                    th:selected="${selectedSort == 'name_asc'}">
+                Naam A–Z
+            </option>
+
+            <option value="name_desc"
+                    th:selected="${selectedSort == 'name_desc'}">
+                Naam Z–A
+            </option>
+
+            <option value="price_asc"
+                    th:selected="${selectedSort == 'price_asc'}">
+                Prijs laag → hoog
+            </option>
+
+            <option value="price_desc"
+                    th:selected="${selectedSort == 'price_desc'}">
+                Prijs hoog → laag
+            </option>
+        </select>
+
+    </form>
+
 
     <!-- ===== PRODUCT GRID ===== -->
     <div class="grid">

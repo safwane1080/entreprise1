@@ -4,6 +4,7 @@ import be.entreprise.entreprise1.model.Category;
 import be.entreprise.entreprise1.model.Product;
 import be.entreprise.entreprise1.repository.CategoryRepository;
 import be.entreprise.entreprise1.repository.ProductRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class ProductController {
     public String products(
             @RequestParam(required = false) Long category,
             @RequestParam(required = false) String q,
+            @RequestParam(required = false) String sort,
             Model model
     ) {
 
@@ -35,25 +37,42 @@ public class ProductController {
 
         boolean hasSearch = q != null && !q.trim().isEmpty();
 
+        // ===== SORT LOGICA =====
+        Sort sortOrder = Sort.unsorted();
+
+        if ("name_asc".equals(sort)) {
+            sortOrder = Sort.by("name").ascending();
+        } else if ("name_desc".equals(sort)) {
+            sortOrder = Sort.by("name").descending();
+        } else if ("price_asc".equals(sort)) {
+            sortOrder = Sort.by("pricePerDay").ascending();
+        } else if ("price_desc".equals(sort)) {
+            sortOrder = Sort.by("pricePerDay").descending();
+        }
+
+        // ===== BESTAANDE LOGICA + SORT =====
         if (category == null && !hasSearch) {
-            // Geen filter, geen zoekterm
-            products = productRepository.findAll();
+
+            products = productRepository.findAll(sortOrder);
 
         } else if (category != null && !hasSearch) {
-            // Alleen categorie
-            products = productRepository.findByCategoryId(category);
+
+            products = productRepository.findByCategoryId(category, sortOrder);
 
         } else if (category == null) {
-            // Alleen zoekterm
+
             products = productRepository
-                    .findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(q, q);
+                    .findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                            q, q, sortOrder
+                    );
 
         } else {
-            // Categorie + zoekterm
+
             products = productRepository
                     .findByCategoryIdAndNameContainingIgnoreCaseOrCategoryIdAndDescriptionContainingIgnoreCase(
                             category, q,
-                            category, q
+                            category, q,
+                            sortOrder
                     );
         }
 
@@ -61,6 +80,7 @@ public class ProductController {
         model.addAttribute("products", products);
         model.addAttribute("q", q);
         model.addAttribute("selectedCategory", category);
+        model.addAttribute("selectedSort", sort);
 
         return "products";
     }

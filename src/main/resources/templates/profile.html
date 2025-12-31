@@ -13,7 +13,7 @@
         <div class="brand">
             <div class="logo"></div>
             <div>
-                Art Equipment Rental
+                Art Equipment Rental EHB
                 <small>Gebruikersprofiel</small>
             </div>
         </div>
@@ -28,7 +28,34 @@
 
 <main class="container">
 
-    <!-- Pagina titel -->
+    <!-- ===== ALERTS ===== -->
+    <div th:if="${param.error != null and param.error.contains('wrongPassword')}"
+         class="alert alert-error">
+        Huidig wachtwoord is fout.
+    </div>
+
+    <div th:if="${param.error != null and param.error.contains('passwordMismatch')}"
+         class="alert alert-error">
+        Wachtwoorden komen niet overeen.
+    </div>
+
+    <div th:if="${param.error != null and param.error.contains('weakPassword')}"
+         class="alert alert-error">
+        Wachtwoord moet minstens 8 tekens bevatten,
+        met een hoofdletter, een kleine letter en een cijfer.
+    </div>
+
+    <div th:if="${param.passwordChanged != null}"
+         class="alert alert-success">
+        Wachtwoord succesvol gewijzigd.
+    </div>
+
+    <div th:if="${param.updated != null}"
+         class="alert alert-success">
+        Profielgegevens succesvol aangepast.
+    </div>
+
+    <!-- ===== PAGINA TITEL ===== -->
     <div class="page-head">
         <div>
             <h1>Mijn profiel</h1>
@@ -36,10 +63,9 @@
         </div>
     </div>
 
-    <!-- Profiel inhoud -->
     <div class="grid">
 
-        <!-- Account card -->
+        <!-- ===== ACCOUNT INFO ===== -->
         <div class="card item">
             <div class="profile-header">
                 <div class="profile-avatar">
@@ -47,7 +73,7 @@
                 </div>
 
                 <div>
-                    <h3>Account</h3>
+                    <h3 th:text="${user.firstName != null ? user.firstName + ' ' + user.lastName : 'Account'}"></h3>
                     <p class="muted">Persoonlijke gegevens</p>
                 </div>
             </div>
@@ -61,7 +87,65 @@
             </div>
         </div>
 
-        <!-- Overzicht card -->
+        <!-- ===== GEGEVENS AANPASSEN ===== -->
+        <div class="card item">
+            <h3>Gegevens aanpassen</h3>
+
+            <!-- WACHTWOORD -->
+            <div class="card item">
+                <h3>Wachtwoord wijzigen</h3>
+
+                <form th:action="@{/profile/change-password}" method="post">
+
+                    <div class="form-group">
+                        <label>Huidig wachtwoord</label>
+                        <input type="password" name="currentPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nieuw wachtwoord</label>
+                        <input type="password" name="newPassword" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bevestig nieuw wachtwoord</label>
+                        <input type="password" name="confirmPassword" required>
+                    </div>
+
+                    <div class="actions" style="margin-top:12px;">
+                        <button class="btn btn-secondary">
+                            Wachtwoord wijzigen
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- NAAM -->
+            <form th:action="@{/profile/update}" method="post">
+
+                <div class="form-group">
+                    <label>Voornaam</label>
+                    <input type="text"
+                           name="firstName"
+                           th:value="${user.firstName}"
+                           placeholder="Voornaam">
+                </div>
+
+                <div class="form-group">
+                    <label>Achternaam</label>
+                    <input type="text"
+                           name="lastName"
+                           th:value="${user.lastName}"
+                           placeholder="Achternaam">
+                </div>
+
+                <div class="actions" style="margin-top:12px;">
+                    <button class="btn">Opslaan</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ===== OVERZICHT ===== -->
         <div class="card item">
             <h3>Overzicht</h3>
 

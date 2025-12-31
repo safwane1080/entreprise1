@@ -18,8 +18,11 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+    @Column(nullable = true)
+    private String firstName;
 
-    // getters
+    @Column(nullable = true)
+    private String lastName;
     public Long getId() {
         return id;
     }
@@ -35,8 +38,23 @@ public class User {
     public String getRole() {
         return role;
     }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 
     // setters
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
