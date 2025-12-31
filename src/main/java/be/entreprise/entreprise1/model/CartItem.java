@@ -31,7 +31,7 @@ public class CartItem {
     public double getSubtotal() {
         if (product == null) return 0.0;
 
-        double pricePerDay = product.getPricePerDay(); // primitive double
+        double pricePerDay = product.getPricePerDay();
         return pricePerDay * quantity * days;
     }
 

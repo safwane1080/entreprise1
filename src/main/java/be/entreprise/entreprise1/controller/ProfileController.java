@@ -32,7 +32,6 @@ public class ProfileController {
         return "profile";
     }
 
-    // ===== NAAM AANPASSEN =====
     @PostMapping("/profile/update")
     public String updateProfile(
             Principal principal,
@@ -49,7 +48,6 @@ public class ProfileController {
         return "redirect:/profile?updated=true";
     }
 
-    // ===== WACHTWOORD AANPASSEN =====
     @PostMapping("/profile/change-password")
     public String changePassword(
             Principal principal,
@@ -88,7 +86,6 @@ public class ProfileController {
         return hasUpper && hasLower && hasDigit;
     }
 
-    // ===== ADMIN ROLE CHANGE =====
     @PostMapping("/admin/change-role")
     @PreAuthorize("hasRole('ADMIN')")
     public String changeUserRole(

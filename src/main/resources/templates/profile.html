@@ -28,7 +28,6 @@
 
 <main class="container">
 
-    <!-- ===== ALERTS ===== -->
     <div th:if="${param.error != null and param.error.contains('wrongPassword')}"
          class="alert alert-error">
         Huidig wachtwoord is fout.
@@ -65,7 +64,6 @@
 
     <div class="grid">
 
-        <!-- ===== ACCOUNT INFO ===== -->
         <div class="card item">
             <div class="profile-header">
                 <div class="profile-avatar">
@@ -87,7 +85,6 @@
             </div>
         </div>
 
-        <!-- ===== GEGEVENS AANPASSEN ===== -->
         <div class="card item">
             <h3>Gegevens aanpassen</h3>
 
@@ -120,7 +117,6 @@
                 </form>
             </div>
 
-            <!-- NAAM -->
             <form th:action="@{/profile/update}" method="post">
 
                 <div class="form-group">
@@ -145,7 +141,6 @@
             </form>
         </div>
 
-        <!-- ===== OVERZICHT ===== -->
         <div class="card item">
             <h3>Overzicht</h3>
 

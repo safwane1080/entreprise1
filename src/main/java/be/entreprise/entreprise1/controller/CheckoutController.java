@@ -34,7 +34,6 @@ public class CheckoutController {
             LocalDate startDate
     ) {
 
-        // 🔐 extra safety (front-end doet dit ook)
         if (startDate.isBefore(LocalDate.now())) {
             return "redirect:/cart?error=invalidDate";
         }

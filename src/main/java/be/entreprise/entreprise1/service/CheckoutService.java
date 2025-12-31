@@ -34,7 +34,6 @@ public class CheckoutService {
             throw new IllegalStateException("Je winkelmand is leeg.");
         }
 
-        // 🧠 langste huur bepaalt einddatum
         int maxDays = items.stream()
                 .mapToInt(CartItem::getDays)
                 .max()
@@ -50,7 +49,6 @@ public class CheckoutService {
 
         Order savedOrder = orderRepository.save(order);
 
-        // items koppelen aan order
         for (CartItem item : items) {
             item.setOrder(savedOrder);
         }

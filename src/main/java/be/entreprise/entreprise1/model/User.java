@@ -46,7 +46,6 @@ public class User {
         return lastName;
     }
 
-    // setters
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

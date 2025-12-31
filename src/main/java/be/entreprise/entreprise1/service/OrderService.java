@@ -22,10 +22,6 @@ public class OrderService {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
     }
-
-    // =========================
-    // OPHALEN (ADMIN)
-    // =========================
     @Transactional
     public void markAsPickedUp(Long orderId) {
 
@@ -40,14 +36,10 @@ public class OrderService {
             throw new IllegalStateException("Order bevat geen items");
         }
 
-        // ❗ Stock werd al verminderd bij reserveren (CartService)
         order.setStatus("OPGEHAALD");
         orderRepository.save(order);
     }
 
-    // =========================
-    // TERUGBRENGEN (ADMIN)
-    // =========================
     public void markAsReturned(Long orderId) {
 
         Order order = orderRepository.findById(orderId)
@@ -61,7 +53,6 @@ public class OrderService {
             throw new IllegalStateException("Order bevat geen items");
         }
 
-        // Stock terug verhogen
         for (CartItem item : order.getItems()) {
             Product product = item.getProduct();
             product.setStock(product.getStock() + item.getQuantity());
@@ -72,9 +63,6 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    // =========================
-    // STATUS UPDATE (OPTIONEEL)
-    // =========================
     @Transactional
     public void updateStatus(Long orderId, OrderStatus newStatus) {
 

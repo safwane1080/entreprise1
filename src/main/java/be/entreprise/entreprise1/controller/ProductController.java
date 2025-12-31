@@ -37,7 +37,6 @@ public class ProductController {
 
         boolean hasSearch = q != null && !q.trim().isEmpty();
 
-        // ===== SORT LOGICA =====
         Sort sortOrder = Sort.unsorted();
 
         if ("name_asc".equals(sort)) {
@@ -50,7 +49,6 @@ public class ProductController {
             sortOrder = Sort.by("pricePerDay").descending();
         }
 
-        // ===== BESTAANDE LOGICA + SORT =====
         if (category == null && !hasSearch) {
 
             products = productRepository.findAll(sortOrder);

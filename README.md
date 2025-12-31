@@ -155,7 +155,8 @@ Tijdens de ontwikkeling werd **ChatGPT** gebruikt als ondersteunend hulpmiddel v
 
 Alle gegenereerde code werd **begrepen, aangepast en geïntegreerd** door de student zelf.  
 De werking van het project kan mondeling volledig worden toegelicht.
-
+https://chatgpt.com/share/6955a0cf-0cdc-8012-be17-ba70c7eb3c1f
+https://chatgpt.com/share/6955a17b-c2c4-8012-aaf5-5f9b3f70ca7fhttps://chatgpt.com/share/6955a1a1-5a48-8012-bcd7-ef13f694deea
 ---
 
 ## Referenties

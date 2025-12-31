@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final OrderRepository orderRepository;
-    private final OrderService orderService; // ✅ injecteren
-
+    private final OrderService orderService;
     public AdminController(
             OrderRepository orderRepository,
             OrderService orderService
@@ -39,7 +38,7 @@ public class AdminController {
             @PathVariable Long id,
             @RequestParam OrderStatus status
     ) {
-        orderService.updateStatus(id, status); // ✅ correct
+        orderService.updateStatus(id, status);
         return "redirect:/admin/orders";
     }
 }

@@ -33,14 +33,11 @@ public class CartService {
             totalQuantity += existingItem.getQuantity();
         }
 
-        // 🔒 Stock check
         if (totalQuantity > product.getStock()) {
             throw new IllegalArgumentException(
                     "Onvoldoende stock voor " + product.getName()
             );
         }
-
-        // 🔻 STOCK VERLAGEN
         product.setStock(product.getStock() - quantity);
 
         if (existingItem != null) {
@@ -64,7 +61,6 @@ public class CartService {
         for (CartItem item : items) {
             Product product = item.getProduct();
 
-            // 🔺 STOCK TERUG
             product.setStock(product.getStock() + item.getQuantity());
         }
 

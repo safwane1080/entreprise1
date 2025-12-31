@@ -27,7 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         String role = user.getRole();
 
-        // 🔒 GARANDEER ROLE_ PREFIX
         if (!role.startsWith("ROLE_")) {
             role = "ROLE_" + role;
         }

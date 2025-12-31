@@ -32,9 +32,6 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    // =========================
-    // OVERZICHT EIGEN ORDERS
-    // =========================
     @GetMapping
     public String orders(Principal principal, Model model) {
 
@@ -52,10 +49,6 @@ public class OrderController {
 
         return "orders";
     }
-
-    // =========================
-    // ORDER DETAIL
-    // =========================
     @GetMapping("/{id}")
     public String orderDetail(
             @PathVariable Long id,
@@ -73,7 +66,6 @@ public class OrderController {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order niet gevonden"));
 
-        // ✅ Toegang: eigenaar OF admin
         if (!order.getUser().getId().equals(user.getId()) && !isAdmin()) {
             return "redirect:/orders";
         }
@@ -82,9 +74,6 @@ public class OrderController {
         return "order-detail";
     }
 
-    // =========================
-    // OPHALEN (ADMIN)
-    // =========================
     @PostMapping("/{id}/pickup")
     @PreAuthorize("hasRole('ADMIN')")
     public String pickup(@PathVariable Long id) {
@@ -92,9 +81,6 @@ public class OrderController {
         return "redirect:/orders/" + id;
     }
 
-    // =========================
-    // TERUGBRENGEN (ADMIN)
-    // =========================
     @PostMapping("/{id}/return")
     @PreAuthorize("hasRole('ADMIN')")
     public String returnOrder(@PathVariable Long id) {
@@ -102,9 +88,6 @@ public class OrderController {
         return "redirect:/orders/" + id;
     }
 
-    // =========================
-    // HELPER: ADMIN CHECK
-    // =========================
     private boolean isAdmin() {
         Authentication auth = SecurityContextHolder
                 .getContext()

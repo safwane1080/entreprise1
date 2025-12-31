@@ -15,7 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByOrderByCreatedAtDesc();
 
-    // ✅ BELANGRIJK: order + items + product in één keer ophalen
     @Query("""
         select distinct o
         from Order o

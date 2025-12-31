@@ -15,7 +15,6 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 🔐 min 8 chars, 1 hoofdletter, 1 cijfer
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*[A-Z])(?=.*\\d).{8,}$");
 
@@ -43,19 +42,16 @@ public class AuthController {
             Model model
     ) {
 
-        // 1️⃣ Email bestaat al
         if (userRepository.findByEmail(email).isPresent()) {
             model.addAttribute("error", "Deze email bestaat al.");
             return "register";
         }
 
-        // 2️⃣ Wachtwoorden gelijk?
         if (!password.equals(confirmPassword)) {
             model.addAttribute("error", "Wachtwoorden komen niet overeen.");
             return "register";
         }
 
-        // 3️⃣ Wachtwoord sterkte
         if (!PASSWORD_PATTERN.matcher(password).matches()) {
             model.addAttribute("error",
                     "Wachtwoord moet minstens 8 tekens bevatten, "
@@ -63,7 +59,6 @@ public class AuthController {
             return "register";
         }
 
-        // 4️⃣ User opslaan
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
