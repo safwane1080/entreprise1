@@ -7,7 +7,6 @@
 </head>
 <body>
 
-<!-- ================= TOPBAR ================= -->
 <header class="topbar">
     <div class="topbar-inner">
         <div class="brand">
@@ -26,62 +25,130 @@
         </nav>
     </div>
 </header>
-
-<!-- ================= HERO ================= -->
 <section class="hero">
     <div class="hero-inner">
-        <h1>Reserveer professioneel materiaal<br>voor je artistieke projecten</h1>
+        <span class="badge">🎬 Voor kunst & audiovisuele studenten</span>
+
+        <h1>
+            Alles wat je nodig hebt<br>
+            voor je <span style="color:#4f7cff;">creatieve projecten</span>
+        </h1>
 
         <p>
-            Van belichting en podiumelementen tot kabels en accessoires.
-            Speciaal ontworpen voor studenten van de kunstopleiding.
+            Reserveer professioneel materiaal zoals belichting, audio,
+            podiumelementen en accessoires — snel, transparant en zonder gedoe.
         </p>
 
         <div class="hero-actions">
             <a th:href="@{/products}" class="btn">Bekijk catalogus</a>
             <a th:href="@{/register}" class="btn btn-ghost">Account aanmaken</a>
         </div>
+
+        <div class="grid" style="margin-top:40px;">
+            <div class="card item">
+                <h2>+120</h2>
+                <p class="muted">Beschikbare items</p>
+            </div>
+            <div class="card item">
+                <h2>5</h2>
+                <p class="muted">Materiaalcategorieën</p>
+            </div>
+            <div class="card item">
+                <h2>24/7</h2>
+                <p class="muted">Online reserveren</p>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- ================= FEATURES ================= -->
 <section class="container">
     <div class="page-head">
-        <h2>Wat kan je met dit platform?</h2>
+        <h2>Hoe werkt het?</h2>
+        <p class="muted">In 3 eenvoudige stappen</p>
     </div>
 
     <div class="grid">
         <div class="card item">
-            <h3>📦 Materiaal reserveren</h3>
+            <h3>1️⃣ Kies je materiaal</h3>
             <p class="muted">
-                Kies uit een duidelijke catalogus met professioneel materiaal,
-                beschikbaar per categorie.
+                Browse door de catalogus en filter per categorie.
+                Je ziet meteen wat beschikbaar is.
             </p>
         </div>
 
         <div class="card item">
-            <h3>🛒 Winkelmand & checkout</h3>
+            <h3>2️⃣ Reserveer online</h3>
             <p class="muted">
-                Reserveer materiaal voor meerdere dagen en bevestig je aanvraag
-                in één overzicht.
+                Kies het aantal dagen en bevestig je reservatie
+                via de winkelmand.
             </p>
         </div>
 
         <div class="card item">
-            <h3>📑 Reservatiegeschiedenis</h3>
+            <h3>3️⃣ Ophalen & creëren</h3>
             <p class="muted">
-                Raadpleeg al je eerdere reservaties en hou overzicht
-                over je projecten.
+                Haal je materiaal op en focus op wat telt:
+                jouw creatief project.
             </p>
         </div>
     </div>
 </section>
+<section class="container">
+    <div class="page-head">
+        <h2>Materiaalcategorieën</h2>
+        <p class="muted">Alles netjes georganiseerd</p>
+    </div>
 
-<!-- ================= CTA ================= -->
+    <div class="grid">
+        <div class="card item">
+            <h3>💡 Belichting</h3>
+            <p class="muted">LED panels, spots en creatieve verlichting</p>
+        </div>
+
+        <div class="card item">
+            <h3>🎤 Audio</h3>
+            <p class="muted">Microfoons, mixers en geluidsaccessoires</p>
+        </div>
+
+        <div class="card item">
+            <h3>🔌 Kabels</h3>
+            <p class="muted">XLR, stroomkabels en adapters</p>
+        </div>
+
+        <div class="card item">
+            <h3>🎭 Podium & rigging</h3>
+            <p class="muted">Statieven, trussen en podiumelementen</p>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="page-head">
+        <h2>Waarom studenten dit gebruiken</h2>
+    </div>
+
+    <div class="grid">
+        <div class="card item">
+            <p>
+                “Eindelijk geen last-minute stress meer voor materiaal.
+                Alles staat netjes klaar.”
+            </p>
+            <small class="muted">— Audiovisuele student</small>
+        </div>
+
+        <div class="card item">
+            <p>
+                “Overzichtelijk, snel en perfect voor groepsprojecten.”
+            </p>
+            <small class="muted">— Kunstopleiding</small>
+        </div>
+    </div>
+</section>
+
 <section class="cta">
-    <h2>Klaar om te starten?</h2>
-    <p>Maak een account aan en reserveer vandaag nog materiaal.</p>
-    <a th:href="@{/register}" class="btn btn-secondary">Account aanmaken</a>
+    <h2>Klaar om te creëren?</h2>
+    <p>Maak gratis een account aan en reserveer vandaag nog materiaal.</p>
+    <a th:href="@{/register}" class="btn btn-secondary">Start nu</a>
 </section>
 
 </body>

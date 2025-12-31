@@ -5,6 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+<tr th:each="order : ${orders}">
+<form th:action="@{/admin/orders/{id}/status(id=${order.id})}" method="post">
+
+    <select name="status">
+        <option
+                th:each="s : ${T(be.entreprise.entreprise1.model.OrderStatus).values()}"
+                th:value="${s}"
+                th:text="${s}"
+                th:selected="${s == order.status}">
+        </option>
+    </select>
+
+    <button type="submit">Wijzig</button>
+</form>
 
 </body>
 </html>

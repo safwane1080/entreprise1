@@ -2,9 +2,11 @@ package be.entreprise.entreprise1.service;
 
 import be.entreprise.entreprise1.model.CartItem;
 import be.entreprise.entreprise1.model.Order;
+import be.entreprise.entreprise1.model.OrderStatus;
 import be.entreprise.entreprise1.model.Product;
 import be.entreprise.entreprise1.repository.OrderRepository;
 import be.entreprise.entreprise1.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,39 +26,21 @@ public class OrderService {
     // =========================
     // OPHALEN (ADMIN)
     // =========================
+    @Transactional
     public void markAsPickedUp(Long orderId) {
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order niet gevonden"));
 
-        // Status-check
         if (!"BEVESTIGD".equals(order.getStatus())) {
             throw new IllegalStateException("Status moet BEVESTIGD zijn");
         }
 
-        // Extra veiligheid
         if (order.getItems() == null || order.getItems().isEmpty()) {
             throw new IllegalStateException("Order bevat geen items");
         }
 
-        // 🔒 Stock controle
-        for (CartItem item : order.getItems()) {
-            Product product = item.getProduct();
-
-            if (product.getStock() < item.getQuantity()) {
-                throw new IllegalStateException(
-                        "Onvoldoende stock voor " + product.getName()
-                );
-            }
-        }
-
-        // ✅ Stock verminderen
-        for (CartItem item : order.getItems()) {
-            Product product = item.getProduct();
-            product.setStock(product.getStock() - item.getQuantity());
-            productRepository.save(product);
-        }
-
+        // ❗ Stock werd al verminderd bij reserveren (CartService)
         order.setStatus("OPGEHAALD");
         orderRepository.save(order);
     }
@@ -69,7 +53,6 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order niet gevonden"));
 
-        // Status-check
         if (!"OPGEHAALD".equals(order.getStatus())) {
             throw new IllegalStateException("Status moet OPGEHAALD zijn");
         }
@@ -86,6 +69,29 @@ public class OrderService {
         }
 
         order.setStatus("TERUGGEBRACHT");
+        orderRepository.save(order);
+    }
+
+    // =========================
+    // STATUS UPDATE (OPTIONEEL)
+    // =========================
+    @Transactional
+    public void updateStatus(Long orderId, OrderStatus newStatus) {
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order niet gevonden"));
+
+        OrderStatus current = OrderStatus.valueOf(order.getStatus());
+
+        if (current == OrderStatus.BEVESTIGD && newStatus != OrderStatus.OPGEHAALD) {
+            throw new IllegalStateException("Ongeldige statusovergang");
+        }
+
+        if (current == OrderStatus.OPGEHAALD && newStatus != OrderStatus.TERUGGEBRACHT) {
+            throw new IllegalStateException("Ongeldige statusovergang");
+        }
+
+        order.setStatus(String.valueOf(newStatus));
         orderRepository.save(order);
     }
 }

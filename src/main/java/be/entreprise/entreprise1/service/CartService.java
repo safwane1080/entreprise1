@@ -23,18 +23,52 @@ public class CartService {
 
     public void addToCart(User user, Product product, int quantity, int days) {
 
-        CartItem item = new CartItem();
-        item.setUser(user);
-        item.setProduct(product);
-        item.setQuantity(quantity);
-        item.setDays(days);
+        CartItem existingItem = cartItemRepository
+                .findByUserAndProductAndOrderIsNull(user, product)
+                .orElse(null);
 
-        cartItemRepository.save(item);
+        int totalQuantity = quantity;
+
+        if (existingItem != null) {
+            totalQuantity += existingItem.getQuantity();
+        }
+
+        // 🔒 Stock check
+        if (totalQuantity > product.getStock()) {
+            throw new IllegalArgumentException(
+                    "Onvoldoende stock voor " + product.getName()
+            );
+        }
+
+        // 🔻 STOCK VERLAGEN
+        product.setStock(product.getStock() - quantity);
+
+        if (existingItem != null) {
+            existingItem.setQuantity(totalQuantity);
+            existingItem.setDays(days);
+            cartItemRepository.save(existingItem);
+        } else {
+            CartItem item = new CartItem();
+            item.setUser(user);
+            item.setProduct(product);
+            item.setQuantity(quantity);
+            item.setDays(days);
+            cartItemRepository.save(item);
+        }
     }
-
 
     public void clearCart(User user) {
-        List<CartItem> items = cartItemRepository.findByUser(user);
+
+        List<CartItem> items = cartItemRepository.findByUserAndOrderIsNull(user);
+
+        for (CartItem item : items) {
+            Product product = item.getProduct();
+
+            // 🔺 STOCK TERUG
+            product.setStock(product.getStock() + item.getQuantity());
+        }
+
         cartItemRepository.deleteAll(items);
     }
+
 }

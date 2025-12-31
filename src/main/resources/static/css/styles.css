@@ -151,7 +151,7 @@ button.btn:active {
 .btn-ghost {
     background: transparent;
     border: 1px solid #d7deea;
-    color: #0f172a;
+    color:#ffffff;
 }
 
 
@@ -598,3 +598,84 @@ select:focus {
     background:#fee2e2;
     color:#7f1d1d;
 }
+/* ================= MICRO ANIMATIONS ================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes softGlow {
+    0% { text-shadow: 0 0 0 rgba(79,124,255,0); }
+    50% { text-shadow: 0 0 20px rgba(79,124,255,0.35); }
+    100% { text-shadow: 0 0 0 rgba(79,124,255,0); }
+}
+.hero-inner {
+    animation: fadeUp 0.9s ease forwards;
+}
+
+.hero h1 span {
+    animation: softGlow 3s ease-in-out infinite;
+}
+.card {
+    transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+.btn {
+    transition:
+            transform 0.15s ease,
+            box-shadow 0.15s ease,
+            background-color 0.15s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79,124,255,0.35);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+.badge {
+    animation: badgePulse 4s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+.grid > .card {
+    animation: fadeUp 0.6s ease forwards;
+}
+
+.grid > .card:nth-child(2) { animation-delay: 0.1s; }
+.grid > .card:nth-child(3) { animation-delay: 0.2s; }
+.grid > .card:nth-child(4) { animation-delay: 0.3s; }
+
+.card h2,
+.card h3 {
+    color: #0f172a;
+}
+
+.card p,
+.card .muted {
+    color: #334155;
+}
+

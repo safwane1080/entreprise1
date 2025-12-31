@@ -40,11 +40,15 @@ public class CartController {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product niet gevonden"));
+        if (quantity > product.getStock()) {
+            throw new IllegalArgumentException("Onvoldoende stock beschikbaar");
+        }
 
         cartService.addToCart(user, product, quantity, days);
 
         return "redirect:/cart";
     }
+
 
     @GetMapping("/cart")
     public String viewCart(Principal principal, Model model) {
@@ -63,4 +67,5 @@ public class CartController {
 
         return "cart";
     }
+
 }

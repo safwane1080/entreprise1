@@ -74,10 +74,15 @@
                     <span class="badge" th:text="${p.category.name}">Categorie</span>
                     <span class="badge">€ <span th:text="${p.pricePerDay}"></span> / dag</span>
 
+                    <span class="badge">
+        Stock: <strong th:text="${p.stock}"></strong>
+    </span>
+
                     <span th:if="${p.stock > 5}" class="stock ok">Beschikbaar</span>
                     <span th:if="${p.stock > 0 and p.stock <= 5}" class="stock low">Beperkte stock</span>
                     <span th:if="${p.stock == 0}" class="stock out">Uitverkocht</span>
                 </div>
+
 
                 <!-- ===== RESERVEREN FORM ===== -->
                 <form th:action="@{/cart/add}" method="post" class="reserve-form">
